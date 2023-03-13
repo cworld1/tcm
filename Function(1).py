@@ -239,11 +239,13 @@ while (True):
 
         MP(color_image)
         FindAcupoints()
-        xy, image = FindAcupoint(color_image, "尺泽", 0)
+        # xy, image = FindAcupoint(color_image, "尺泽", 0)
+        #
+        # x, y, z = Projection(640.612671, 367.137726, 607.669800, 607.552429, 360, 600, depth_color_image[360][600])
+        #
+        # print("x: " + str(x) + '   y: ' + str(y) + '   z: ' + str(z))
 
-        x, y, z = Projection(640.612671, 367.137726, 607.669800, 607.552429, 360, 600, depth_color_image[360][600])
-
-        print("x: " + str(x) + '   y: ' + str(y) + '   z: ' + str(z))
+        print(AcupointsPosition)
 
         img = cv.Mat(color_image)
 

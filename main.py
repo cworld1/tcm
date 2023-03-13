@@ -12,8 +12,6 @@ import math
 # import serial
 import time
 import threading
-# from PoseModule import PoseDetector
-# from HandTrackingModule import HandDetector
 import sys
 
 from HandTrackingModule import HandDetector
@@ -490,8 +488,12 @@ def Kinect_Capture():
             image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
             depth_image = pyK4A.transform_depth_to_color(
                 depth_image_handle, color_image_handle)
+
+            MP(image)
+
             cv.imshow('image', image)
-            print(image , depth_image)
+            FindAcupoints()
+
             k = cv.waitKey(25)
             if k == 27:  # Esc
                 break
@@ -513,6 +515,9 @@ def Kinect_Capture():
 def MP(image):
     global LH_Landmarks, RH_Landmarks, Pose_Landmarks
 
+    # cap = cv.VideoCapture(0)
+    #
+    # success, image = cap.read()
     Hands, img = handDetector.findHands(image, draw=False)
     img = poseDetector.findPose(img, draw=False)
     Poselist, bboxInfo = poseDetector.findPosition(img, draw=False)
@@ -842,6 +847,8 @@ def FindAcupoints():
                     int((cx26 + cx28) // 2), int((cy28 + cy26) // 2))
                 AcupointsPosition[1][1][42] = (int(cx28), int(cy28))
 
+    print(AcupointsPosition)
+
 
 # 下拉复选框插件
 class ComboCheckBox(QComboBox):
@@ -988,7 +995,7 @@ def color_depth_image(depth_image):
 
 # 穴位连线
 def Find_meridians(meridianName):
-    i = meridians.index(meridianName)
+    i = merideans.index(meridianName)
 
     if i <= 2:
         if i == 1:
@@ -1012,9 +1019,12 @@ def Find_meridians(meridianName):
 
 
 if __name__ == '__main__':
-    lock = threading.Lock()
-    first_thread = threading.Thread(target=Kinect_Capture)
-    second_thread = threading.Thread(target=MP)
-    third_thread = threading.Thread(target=FindAcupoints)
-    first_thread.start()
-    cv.imshow('image', image)
+    # cv.imshow('image', image)
+    Kinect_Capture()
+    # lock = threading.Lock()
+    # first_thread = threading.Thread(target=Kinect_Capture)
+    # first_thread.start()
+    # second_thread = threading.Thread(target=MP)
+    # second_thread.start()
+    # third_thread = threading.Thread(target=FindAcupoints)
+    # third_thread.start()
