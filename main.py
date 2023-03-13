@@ -1,4 +1,3 @@
-from pykinectAzure import pyKinectAzure, _k4a
 import numpy as np
 import cv2 as cv
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QLineEdit, QListWidget, \
@@ -8,13 +7,14 @@ from PyQt5.QtCore import Qt, QTimer
 from PIL import Image, ImageDraw, ImageFont
 
 import math
-import serial
+# import serial
 import time
 import threading
-from PoseModule import PoseDetector
-from HandTrackingModule import HandDetector
+# from PoseModule import PoseDetector
+# from HandTrackingModule import HandDetector
 import sys
 sys.path.insert(1, './pyKinectAzure/')
+from pyKinectAzure import pyKinectAzure, _k4a
 
 image = np.ndarray((720, 1200))
 depth_image = np.ndarray((720, 1200))
@@ -565,6 +565,7 @@ def Kinect_Capture():
     pyK4A.device_close()
 
 # 并发线程二，在得到image和depth_image后进行检测，数据更新在LH_Landmarks, RH_Landmarks, Pose_Landmarks
+
 
 def MP(image):
     global LH_Landmarks, RH_Landmarks, Pose_Landmarks
