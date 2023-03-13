@@ -566,7 +566,6 @@ def Kinect_Capture():
 
 # 并发线程二，在得到image和depth_image后进行检测，数据更新在LH_Landmarks, RH_Landmarks, Pose_Landmarks
 
-
 def MP(image):
     global LH_Landmarks, RH_Landmarks, Pose_Landmarks
 
