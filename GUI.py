@@ -39,7 +39,6 @@ class VideoPlayer(QWidget):
                 qimage = QImage(image.data, w, h, QImage.Format_RGB888)
                 pixmap = QPixmap.fromImage(qimage)
                 self.video_frame.setPixmap(pixmap)
-
         QTimer.singleShot(1, self.update_frame)
 
 class ComboCheckBox(QComboBox):
