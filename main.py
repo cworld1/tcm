@@ -35,7 +35,7 @@ poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 
 # 一个UI希望集成上述函数，有一个720*1200的视频显示区域，有两个下拉式复选框组件，一个是穴位acupoints，另一个是经脉meridians，
 # 其本身应该有众多共享的变量
-def GUI(QWidget):
+class GUI(QWidget):
     global image, depth_image
 
     def __init__(self):
@@ -105,7 +105,7 @@ def GUI(QWidget):
         pyK4A.device_stop_cameras()
         pyK4A.device_close()
 
-    def MP():
+    def MP(self):
         global image, depth_image, LH_Landmarks, RH_Landmarks, Pose_Landmarks
 
         handDetector = HandDetector(detectionCon=0.9, maxHands=2)
@@ -134,7 +134,7 @@ def GUI(QWidget):
         if Poselist:
             Pose_Landmarks = Poselist
 
-    def FindAcupoints():
+    def FindAcupoints(self):
         global LH_Landmarks, RH_Landmarks, Pose_Landmarks, AcupointsPosition
 
         if Pose_Landmarks:
@@ -490,7 +490,8 @@ def Kinect_Capture():
             image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
             depth_image = pyK4A.transform_depth_to_color(
                 depth_image_handle, color_image_handle)
-
+            cv.imshow('image', image)
+            print(image , depth_image)
             k = cv.waitKey(25)
             if k == 27:  # Esc
                 break
@@ -1008,3 +1009,12 @@ def Find_meridians(meridianName):
                             AcupointsPosition[1][i][j + 1 +
                                                     len(AcupointsPosition[1][i])], color=(255, 0, 3),
                             thickness=2)
+
+
+if __name__ == '__main__':
+    lock = threading.Lock()
+    first_thread = threading.Thread(target=Kinect_Capture)
+    second_thread = threading.Thread(target=MP)
+    third_thread = threading.Thread(target=FindAcupoints)
+    first_thread.start()
+    cv.imshow('image', image)
