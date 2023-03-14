@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>916</width>
-    <height>551</height>
+    <width>1548</width>
+    <height>789</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>100</y>
+      <x>30</x>
+      <y>110</y>
       <width>271</width>
       <height>141</height>
      </rect>
@@ -75,27 +75,11 @@
      </item>
     </layout>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>30</y>
-      <width>471</width>
-      <height>431</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>600</width>
-      <height>16777215</height>
-     </size>
-    </property>
-   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>270</y>
+      <x>30</x>
+      <y>280</y>
       <width>271</width>
       <height>80</height>
      </rect>
@@ -117,14 +101,27 @@
      </item>
     </layout>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>10</y>
+      <width>1200</width>
+      <height>720</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>916</width>
-     <height>29</height>
+     <width>1548</width>
+     <height>28</height>
     </rect>
    </property>
   </widget>
