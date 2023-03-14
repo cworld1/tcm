@@ -1,4 +1,3 @@
-
 import numpy as np
 import cv2 as cv
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QLineEdit, QListWidget, \
