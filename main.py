@@ -1,4 +1,3 @@
-
 import numpy as np
 import cv2 as cv
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QLineEdit, QListWidget, \
@@ -11,7 +10,7 @@ from PoseModule import PoseDetector
 from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
 import math
 # import serial
-import time
+# import time
 import threading
 import sys
 
@@ -476,6 +475,25 @@ class GUI(QWidget):
 
         QTimer.singleShot(1, self.update_frame)
 
+    def Display(self):
+
+        frame = cv.cvtColor(self.image, cv.COLOR_BGR2RGB)
+        h, w, _ = self.image.shape
+
+        while (True):
+            img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+            h, w, _ = img.shape
+
+            # for i in range(len(self.acupointsButtons.isShow)):
+            #
+            # for i in range(len(self.meridiansButtons.isShow)):
+
+            qimage = QImage(img.data, w, h, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(qimage)
+            self.video_frame.setPixmap(pixmap)
+
+        QTimer.singleShot(1, self.update_frame)
+
 # 并发线程一，调用深度摄像头并获得image和depth_image
 
 
@@ -870,7 +888,7 @@ def FindAcupoints():
                     int((cx26 + cx28) // 2), int((cy28 + cy26) // 2))
                 AcupointsPosition[1][1][42] = (int(cx28), int(cy28))
 
-    #print(AcupointsPosition)
+    # print(AcupointsPosition)
 
 # 下拉复选框插件
 
@@ -1047,7 +1065,7 @@ def Find_meridians(meridianName):
 
 if __name__ == '__main__':
     # cv.imshow('image', image)
-    #Kinect_Capture()
+    # Kinect_Capture()
     # lock = threading.Lock()
     first_thread = threading.Thread(target=Kinect_Capture)
     first_thread.start()

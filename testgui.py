@@ -14,10 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        # 设定主窗口
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(916, 551)
+        # 初步建立布局
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        # 左侧布局 1，包含了两个 QComboBox
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(80, 100, 271, 141))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
@@ -43,28 +46,14 @@ class Ui_MainWindow(object):
         for i in range(len(acupoints)):
             self.comboBox_2.addItem("")
         self.verticalLayout.addWidget(self.comboBox_2)
+
+        # 展示图像，此处需要集成 Kinect 图像注入刷新
         self.graphicsView = QtWidgets.QGraphicsView(self.centralwidget)
         self.graphicsView.setGeometry(QtCore.QRect(410, 30, 471, 431))
         self.graphicsView.setMaximumSize(QtCore.QSize(600, 16777215))
         self.graphicsView.setObjectName("graphicsView")
-        self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(80, 270, 271, 80))
-        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(
-            self.horizontalLayoutWidget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout.addWidget(self.pushButton_2)
-        self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout.addWidget(self.pushButton)
-        self.verticalLayout.addWidget(self.comboBox_2)
-        self.graphicsView = QtWidgets.QGraphicsView(self.centralwidget)
-        self.graphicsView.setGeometry(QtCore.QRect(410, 30, 471, 431))
-        self.graphicsView.setMaximumSize(QtCore.QSize(600, 16777215))
-        self.graphicsView.setObjectName("graphicsView")
+
+        # 左侧布局 2，包含了两个 QPushButton
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(80, 270, 271, 80))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
@@ -87,6 +76,7 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+    # 建立UI翻译，注入文本内容
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -103,6 +93,7 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "暂停"))
 
 
+# 执行主程序
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
