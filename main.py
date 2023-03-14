@@ -516,7 +516,7 @@ def Kinect_Capture():
     device_config.color_resolution = _k4a.K4A_COLOR_RESOLUTION_720P
     device_config.depth_mode = _k4a.K4A_DEPTH_MODE_WFOV_2X2BINNED
 
-    # # 打开摄像头
+    # 打开摄像头
     pyK4A.device_start_cameras(device_config)
 
     # 获取相机序列号
@@ -1095,3 +1095,7 @@ if __name__ == '__main__':
 
     third_thread = threading.Thread(target=FindAcupoints)
     third_thread.start()
+
+# ui = showMain()
+# 更新图片
+# ui.updateImage(img)
