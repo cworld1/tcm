@@ -19,8 +19,8 @@ from HandTrackingModule import HandDetector
 sys.path.insert(1, './pyKinectAzure/')
 from pyKinectAzure import pyKinectAzure, _k4a
 
-image = np.ndarray((720, 1200))
-depth_image = np.ndarray((720, 1200))
+image = np.ndarray((720, 1200, 3))
+depth_image = np.ndarray((720, 1200, 3))
 
 # 各种标记
 LH_Landmarks = []
@@ -455,6 +455,24 @@ class GUI(QWidget):
             self.video_frame.setPixmap(pixmap)
 
         QTimer.singleShot(1, self.update_frame)
+    def Display(self):
+
+        frame = cv.cvtColor(self.image, cv.COLOR_BGR2RGB)
+        h, w, _ = self.image.shape
+
+        while (True):
+            img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+            h, w, _ = img.shape
+
+            # for i in range(len(self.acupointsButtons.isShow)):
+            #
+            # for i in range(len(self.meridiansButtons.isShow)):
+
+            qimage = QImage(img.data, w, h, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(qimage)
+            self.video_frame.setPixmap(pixmap)
+
+        QTimer.singleShot(1, self.update_frame)
 
 
 # 并发线程一，调用深度摄像头并获得image和depth_image
@@ -468,7 +486,7 @@ def Kinect_Capture():
     device_config.color_resolution = _k4a.K4A_COLOR_RESOLUTION_720P
     device_config.depth_mode = _k4a.K4A_DEPTH_MODE_WFOV_2X2BINNED
 
-    # 打开摄像头
+    # # 打开摄像头
     pyK4A.device_start_cameras(device_config)
 
     # 获取相机序列号
@@ -540,6 +558,8 @@ def MP(image):
 
     if Poselist:
         Pose_Landmarks = Poselist
+
+    print(Pose_Landmarks)
 
 # 并发线程三，在更新LH_Landmarks, RH_Landmarks, Pose_Landmarks后进行计算，数据更新在AcupointsPosition
 
@@ -847,7 +867,7 @@ def FindAcupoints():
                     int((cx26 + cx28) // 2), int((cy28 + cy26) // 2))
                 AcupointsPosition[1][1][42] = (int(cx28), int(cy28))
 
-    print(AcupointsPosition)
+    #print(AcupointsPosition)
 
 
 # 下拉复选框插件
@@ -1020,11 +1040,11 @@ def Find_meridians(meridianName):
 
 if __name__ == '__main__':
     # cv.imshow('image', image)
-    Kinect_Capture()
+    #Kinect_Capture()
     # lock = threading.Lock()
-    # first_thread = threading.Thread(target=Kinect_Capture)
-    # first_thread.start()
+    first_thread = threading.Thread(target=Kinect_Capture)
+    first_thread.start()
     # second_thread = threading.Thread(target=MP)
     # second_thread.start()
-    # third_thread = threading.Thread(target=FindAcupoints)
-    # third_thread.start()
+    third_thread = threading.Thread(target=FindAcupoints)
+    third_thread.start()

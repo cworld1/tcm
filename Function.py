@@ -325,6 +325,7 @@ while (True):
 
         MP(color_image)
         FindAcupoints()
+
         xy, image = FindAcupoint(color_image, "尺泽", 0)
 
         print(xy[0], xy[1])
