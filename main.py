@@ -456,6 +456,24 @@ class GUI(QWidget):
             self.video_frame.setPixmap(pixmap)
 
         QTimer.singleShot(1, self.update_frame)
+    def Display(self):
+
+        frame = cv.cvtColor(self.image, cv.COLOR_BGR2RGB)
+        h, w, _ = self.image.shape
+
+        while (True):
+            img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+            h, w, _ = img.shape
+
+            # for i in range(len(self.acupointsButtons.isShow)):
+            #
+            # for i in range(len(self.meridiansButtons.isShow)):
+
+            qimage = QImage(img.data, w, h, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(qimage)
+            self.video_frame.setPixmap(pixmap)
+
+        QTimer.singleShot(1, self.update_frame)
 
     def Display(self):
 
