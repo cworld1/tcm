@@ -9,6 +9,12 @@ from PIL import Image, ImageDraw, ImageFont
 from PoseModule import PoseDetector
 from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
 import math
+
+
+
+
+
+
 # import serial
 # import time
 import threading
@@ -18,8 +24,8 @@ from HandTrackingModule import HandDetector
 
 sys.path.insert(1, './pyKinectAzure/')
 from pyKinectAzure import pyKinectAzure, _k4a
-
 image = np.ndarray((720, 1200, 3))
+
 depth_image = np.ndarray((720, 1200, 3))
 
 # 各种标记
@@ -29,6 +35,7 @@ Pose_Landmarks = []
 
 handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
+
 
 # 一个UI希望集成上述函数，有一个720*1200的视频显示区域，有两个下拉式复选框组件，一个是穴位acupoints，另一个是经脉meridians，
 # 其本身应该有众多共享的变量
@@ -456,24 +463,6 @@ class GUI(QWidget):
             self.video_frame.setPixmap(pixmap)
 
         QTimer.singleShot(1, self.update_frame)
-    def Display(self):
-
-        frame = cv.cvtColor(self.image, cv.COLOR_BGR2RGB)
-        h, w, _ = self.image.shape
-
-        while (True):
-            img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
-            h, w, _ = img.shape
-
-            # for i in range(len(self.acupointsButtons.isShow)):
-            #
-            # for i in range(len(self.meridiansButtons.isShow)):
-
-            qimage = QImage(img.data, w, h, QImage.Format_RGB888)
-            pixmap = QPixmap.fromImage(qimage)
-            self.video_frame.setPixmap(pixmap)
-
-        QTimer.singleShot(1, self.update_frame)
 
     def Display(self):
 
@@ -493,6 +482,26 @@ class GUI(QWidget):
             self.video_frame.setPixmap(pixmap)
 
         QTimer.singleShot(1, self.update_frame)
+
+    def Display(self):
+
+        frame = cv.cvtColor(self.image, cv.COLOR_BGR2RGB)
+        h, w, _ = self.image.shape
+
+        while (True):
+            img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+            h, w, _ = img.shape
+
+            # for i in range(len(self.acupointsButtons.isShow)):
+            #
+            # for i in range(len(self.meridiansButtons.isShow)):
+
+            qimage = QImage(img.data, w, h, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(qimage)
+            self.video_frame.setPixmap(pixmap)
+
+        QTimer.singleShot(1, self.update_frame)
+
 
 # 并发线程一，调用深度摄像头并获得image和depth_image
 
@@ -527,12 +536,12 @@ def Kinect_Capture():
             image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
             depth_image = pyK4A.transform_depth_to_color(
                 depth_image_handle, color_image_handle)
-
+            print(image)
             MP(image)
 
             cv.imshow('image', image)
-            FindAcupoints()
 
+            FindAcupoints()
             k = cv.waitKey(25)
             if k == 27:  # Esc
                 break
@@ -548,10 +557,12 @@ def Kinect_Capture():
     pyK4A.device_stop_cameras()
     pyK4A.device_close()
 
+
 # 并发线程二，在得到image和depth_image后进行检测，数据更新在LH_Landmarks, RH_Landmarks, Pose_Landmarks
 
 
 def MP(image):
+    print(image)
     global LH_Landmarks, RH_Landmarks, Pose_Landmarks
 
     # cap = cv.VideoCapture(0)
@@ -580,7 +591,8 @@ def MP(image):
     if Poselist:
         Pose_Landmarks = Poselist
 
-    print(Pose_Landmarks)
+    # print(Pose_Landmarks)
+
 
 # 并发线程三，在更新LH_Landmarks, RH_Landmarks, Pose_Landmarks后进行计算，数据更新在AcupointsPosition
 
@@ -619,7 +631,7 @@ def FindAcupoints():
                 AcupointsPosition[0][0][2] = (
                     int((cx13 + cx15) // 2), int((cy13 + cy15) // 2))
                 AcupointsPosition[0][0][3] = (
-                    int((cx13*3 + cx15*7) // 10), int((cy13*3+cy15*7) // 10))
+                    int((cx13 * 3 + cx15 * 7) // 10), int((cy13 * 3 + cy15 * 7) // 10))
                 AcupointsPosition[0][0][4] = (
                     int((cx13 + cx15 * 4) // 5), int((cy13 + cy15 * 4) // 5))
                 AcupointsPosition[0][0][5] = (int(cx15), int(cy15))
@@ -638,9 +650,9 @@ def FindAcupoints():
                 AcupointsPosition[0][1][0] = (
                     int((cx11 + cx12) // 2), int((cy11 + cy12) // 2))
                 AcupointsPosition[0][1][1] = (
-                    int((cx11 + cx12) // 2), int((cy11*17 + cy23) // 18))
+                    int((cx11 + cx12) // 2), int((cy11 * 17 + cy23) // 18))
                 AcupointsPosition[0][1][2] = (
-                    int((cx11 + cx12) // 2), int((cy11 * 16 + cy23*2) // 18))
+                    int((cx11 + cx12) // 2), int((cy11 * 16 + cy23 * 2) // 18))
                 AcupointsPosition[0][1][3] = (
                     int((cx11 + cx12) // 2), int((cy11 * 15 + cy23 * 3) // 18))
                 AcupointsPosition[0][1][4] = (
@@ -675,13 +687,13 @@ def FindAcupoints():
                     int((cx23 + cx24) // 2), int((cy23 + cy24) // 2))
 
                 AcupointsPosition[0][2][0] = (
-                    int((cx11*2 + cx12) // 3), int((cy11 * 2 + cy12) // 3))
+                    int((cx11 * 2 + cx12) // 3), int((cy11 * 2 + cy12) // 3))
                 AcupointsPosition[0][2][1] = (
                     int((cx11 * 2 + cx12) // 3), int((cy11 * 15 + cy23) // 16))
                 AcupointsPosition[0][2][2] = (
-                    int((cx11 * 2 + cx12) // 3), int((cy11 * 14 + cy23*2) // 16))
+                    int((cx11 * 2 + cx12) // 3), int((cy11 * 14 + cy23 * 2) // 16))
                 AcupointsPosition[0][2][3] = (
-                    int((cx11 * 2 + cx12) // 3), int((cy11 * 13 + cy23*3) // 16))
+                    int((cx11 * 2 + cx12) // 3), int((cy11 * 13 + cy23 * 3) // 16))
                 AcupointsPosition[0][2][4] = (
                     int((cx11 * 2 + cx12) // 3), int((cy11 * 12 + cy23 * 4) // 16))
                 AcupointsPosition[0][2][5] = (
@@ -709,18 +721,18 @@ def FindAcupoints():
                 AcupointsPosition[0][2][16] = (
                     int((cx23 * 3 + cx24) // 4), int(cy23))
                 AcupointsPosition[0][2][17] = (
-                    int((cx23 + cx25) // 2), int((cy23*4 + cy25) // 5))
+                    int((cx23 + cx25) // 2), int((cy23 * 4 + cy25) // 5))
                 AcupointsPosition[0][2][18] = (
-                    int((cx23 + cx25) // 2), int((cy23*2 + cy25*3) // 5))
+                    int((cx23 + cx25) // 2), int((cy23 * 2 + cy25 * 3) // 5))
                 AcupointsPosition[0][2][19] = (
                     int((cx23 + cx25) // 2), int((cy23 + cy25 * 3) // 4))
                 AcupointsPosition[0][2][20] = (
                     int((cx23 + cx25) // 2), int((cy23 + cy25 * 4) // 5))
                 AcupointsPosition[0][2][21] = (int(cx25), int(cy25))
                 AcupointsPosition[0][2][22] = (
-                    int((cx25 + cx27) // 2), int((cy25*5 + cy27) // 6))
+                    int((cx25 + cx27) // 2), int((cy25 * 5 + cy27) // 6))
                 AcupointsPosition[0][2][23] = (
-                    int((cx25 + cx27) // 2), int((cy25 * 4 + cy27*2) // 6))
+                    int((cx25 + cx27) // 2), int((cy25 * 4 + cy27 * 2) // 6))
                 AcupointsPosition[0][2][24] = (
                     int((cx25 + cx27) // 2), int((cy25 + cy27) // 2))
                 AcupointsPosition[0][2][25] = (int(cx27), int(cy27))
@@ -786,11 +798,11 @@ def FindAcupoints():
                 AcupointsPosition[1][0][4] = (
                     int((cx13 + cx15) // 2), int((cy13 + cy15) // 2))
                 AcupointsPosition[1][0][5] = (
-                    int((cx13 + cx15*2) // 3), int((cy13 + cy15*2) // 3))
+                    int((cx13 + cx15 * 2) // 3), int((cy13 + cy15 * 2) // 3))
                 AcupointsPosition[1][0][6] = (
-                    int((cx13 + cx15*3) // 4), int((cy13 + cy15*3) // 4))
+                    int((cx13 + cx15 * 3) // 4), int((cy13 + cy15 * 3) // 4))
                 AcupointsPosition[1][0][7] = (
-                    int((cx13*2 + cx15) // 3), int((cy13*2 + cy15) // 3))
+                    int((cx13 * 2 + cx15) // 3), int((cy13 * 2 + cy15) // 3))
                 AcupointsPosition[1][0][8] = (int(cx15), int(cy15))
 
                 AcupointsPosition[1][0][9] = (int(cx12), int(cy12))
@@ -811,19 +823,19 @@ def FindAcupoints():
 
                 AcupointsPosition[1][1][0] = (int(cx23), int(cy11))
                 AcupointsPosition[1][1][1] = (
-                    int(cx23), int((cy23 + cy11*17) // 18))
+                    int(cx23), int((cy23 + cy11 * 17) // 18))
                 AcupointsPosition[1][1][2] = (
-                    int(cx23), int((cy23*2 + cy11 * 16) // 18))
+                    int(cx23), int((cy23 * 2 + cy11 * 16) // 18))
                 AcupointsPosition[1][1][3] = (
                     int(cx23), int((cy23 * 3 + cy11 * 15) // 18))
                 AcupointsPosition[1][1][4] = (
-                    int(cx23), int((cy23*4 + cy11 * 14) // 18))
+                    int(cx23), int((cy23 * 4 + cy11 * 14) // 18))
                 AcupointsPosition[1][1][5] = (
-                    int(cx23), int((cy23*5+cy11*13)//18))
+                    int(cx23), int((cy23 * 5 + cy11 * 13) // 18))
                 AcupointsPosition[1][1][6] = (
                     int(cx23), int((cy23 * 7 + cy11 * 11) // 18))
                 AcupointsPosition[1][1][7] = (
-                    int(cx23), int((cy23 * 9 + cy11*9) // 18))
+                    int(cx23), int((cy23 * 9 + cy11 * 9) // 18))
                 AcupointsPosition[1][1][8] = (
                     int(cx23), int((cy23 * 10 + cy11 * 8) // 18))
                 AcupointsPosition[1][1][9] = (
@@ -834,21 +846,21 @@ def FindAcupoints():
                     int(cx23), int((cy23 * 16 + cy11 * 2) // 18))
                 AcupointsPosition[1][1][12] = (int(cx23), int(cy23))
                 AcupointsPosition[1][1][13] = (
-                    int((cx23*2+cx25)//3), int((cy23*2+cy25)//3))
+                    int((cx23 * 2 + cx25) // 3), int((cy23 * 2 + cy25) // 3))
                 AcupointsPosition[1][1][14] = (
-                    int((cx23 + cx25*2) // 3), int((cy23 + cy25*2) // 3))
+                    int((cx23 + cx25 * 2) // 3), int((cy23 + cy25 * 2) // 3))
                 AcupointsPosition[1][1][15] = (int(cx25), int(cy25))
                 AcupointsPosition[1][1][16] = (
                     int((cx25 + cx27) // 2), int((cy27 + cy25 * 9) // 10))
                 AcupointsPosition[1][1][17] = (
-                    int((cx25 + cx27) // 2), int((cy27*3 + cy25 * 7) // 10))
+                    int((cx25 + cx27) // 2), int((cy27 * 3 + cy25 * 7) // 10))
                 AcupointsPosition[1][1][18] = (
                     int((cx25 + cx27) // 2), int((cy27 + cy25) // 2))
                 AcupointsPosition[1][1][19] = (
                     int((cx25 + cx27) // 2), int((cy27 + cy25) // 2))
                 AcupointsPosition[1][1][20] = (int(cx27), int(cy27))
                 AcupointsPosition[1][1][21] = (
-                    int(cx23), int((cy23 * 16 + cy11*2) // 18))
+                    int(cx23), int((cy23 * 16 + cy11 * 2) // 18))
                 AcupointsPosition[1][1][22] = (int(cx24), int(cy12))
                 AcupointsPosition[1][1][23] = (
                     int(cx24), int((cy24 + cy12 * 17) // 18))
@@ -859,7 +871,7 @@ def FindAcupoints():
                 AcupointsPosition[1][1][26] = (
                     int(cx24), int((cy24 * 4 + cy12 * 14) // 18))
                 AcupointsPosition[1][1][27] = (
-                    int(cx24), int((cy24 * 5 + cy12*13) // 18))
+                    int(cx24), int((cy24 * 5 + cy12 * 13) // 18))
                 AcupointsPosition[1][1][28] = (
                     int(cx24), int((cy24 * 7 + cy12 * 11) // 18))
                 AcupointsPosition[1][1][29] = (
@@ -889,6 +901,7 @@ def FindAcupoints():
                 AcupointsPosition[1][1][42] = (int(cx28), int(cy28))
 
     # print(AcupointsPosition)
+
 
 # 下拉复选框插件
 
@@ -972,6 +985,7 @@ class ComboCheckBox(QComboBox):
         self.setView(self.qListWidget)
         self.setLineEdit(self.qLineEdit)
 
+
 # 图像上画穴位点
 
 
@@ -988,6 +1002,7 @@ def cv2ImgAddText(img, text, left, top, textColor=(0, 255, 0), textSize=20):
     # 转换回OpenCV格式
     return cv.cvtColor(np.asarray(img), cv.COLOR_RGB2BGR)
 
+
 # 查询函数，输入穴位名，输出在Name中的位置下标
 
 
@@ -1000,6 +1015,7 @@ def FindAcupoint(acupointName=""):
                     return i, j, k, n
                 n = n + 1
 
+
 # 预测
 
 
@@ -1011,11 +1027,13 @@ def Projection(u0, v0, fx, fy, u, v, z):
     y = z * (matrix[1][1] * v + matrix[1][2]) / 10
     return x, y, z / 10
 
+
 # 计算差值
 
 
 def delta(x, y, z, dx, dy, dz):
     return x - dx, y - dy, z - dz
+
 
 # 计算角度
 
@@ -1024,6 +1042,7 @@ def pos_angle(x, y, z):
     theta_1 = math.atan2(x, z) * 180 / math.pi
     theta_2 = math.atan2(y, z) * 180 / math.pi
     return theta_1, theta_2
+
 
 # 上色
 
@@ -1035,6 +1054,7 @@ def color_depth_image(depth_image):
     depth_color_image = cv.applyColorMap(depth_color_image, cv.COLORMAP_JET)
 
     return depth_color_image
+
 
 # 穴位连线
 
@@ -1052,7 +1072,8 @@ def Find_meridians(meridianName):
                 image = cv.line(image, AcupointsPosition[0][i][j], AcupointsPosition[0][i][j + 1], color=(255, 0, 3),
                                 thickness=2)
                 image = cv.line(image, AcupointsPosition[0][i][j + len(AcupointsPosition[0][i])],
-                                AcupointsPosition[0][i][j + 1 + len(AcupointsPosition[0][i])], color=(255, 0, 3), thickness=2)
+                                AcupointsPosition[0][i][j + 1 + len(AcupointsPosition[0][i])], color=(255, 0, 3),
+                                thickness=2)
     else:
         for j in range((len(AcupointsPosition[0][i]) - 2) / 2):
             image = cv.line(image, AcupointsPosition[1][i][j], AcupointsPosition[1][i][j + 1], color=(255, 0, 3),
@@ -1069,7 +1090,8 @@ if __name__ == '__main__':
     # lock = threading.Lock()
     first_thread = threading.Thread(target=Kinect_Capture)
     first_thread.start()
-    # second_thread = threading.Thread(target=MP)
-    # second_thread.start()
+    second_thread = threading.Thread(target=MP, args=(image, ))
+    second_thread.start()
+
     third_thread = threading.Thread(target=FindAcupoints)
     third_thread.start()

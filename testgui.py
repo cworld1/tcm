@@ -89,8 +89,9 @@ class Ui_MainWindow(object):
         for i in range(len(acupoints)):
             self.comboBox_2.setItemText(
                 i, _translate("MainWindow", acupoints[i]))
-        self.pushButton.setText(_translate("MainWindow", "播放"))
         self.pushButton_2.setText(_translate("MainWindow", "暂停"))
+        self.pushButton.setText(_translate("MainWindow", "播放"))
+
 
 
 # 执行主程序
