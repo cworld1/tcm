@@ -1,3 +1,4 @@
+
 import numpy as np
 import cv2 as cv
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QLineEdit, QListWidget, \
@@ -7,7 +8,7 @@ from PyQt5.QtCore import Qt, QTimer
 from PIL import Image, ImageDraw, ImageFont
 
 from PoseModule import PoseDetector
-from store.data import merideans, acupoints,Name,AcupointsPosition,AcupointIsShow
+from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
 import math
 # import serial
 import time
@@ -30,9 +31,10 @@ Pose_Landmarks = []
 handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 
-
 # 一个UI希望集成上述函数，有一个720*1200的视频显示区域，有两个下拉式复选框组件，一个是穴位acupoints，另一个是经脉meridians，
 # 其本身应该有众多共享的变量
+
+
 class GUI(QWidget):
     global image, depth_image
 
@@ -474,8 +476,9 @@ class GUI(QWidget):
 
         QTimer.singleShot(1, self.update_frame)
 
-
 # 并发线程一，调用深度摄像头并获得image和depth_image
+
+
 def Kinect_Capture():
     # 添加 Azure Kinect SDK 路径
     modulePath = 'C:\\Program Files\\Azure Kinect SDK v1.4.1\\sdk\\windows-desktop\\amd64\\release\\bin\\k4a.dll'
@@ -869,8 +872,9 @@ def FindAcupoints():
 
     #print(AcupointsPosition)
 
-
 # 下拉复选框插件
+
+
 class ComboCheckBox(QComboBox):
     def __init__(self, items):  # items==[str,str...]
         super(ComboCheckBox, self).__init__()
@@ -950,8 +954,9 @@ class ComboCheckBox(QComboBox):
         self.setView(self.qListWidget)
         self.setLineEdit(self.qLineEdit)
 
-
 # 图像上画穴位点
+
+
 def cv2ImgAddText(img, text, left, top, textColor=(0, 255, 0), textSize=20):
     if (isinstance(img, np.ndarray)):  # 判断是否OpenCV图片类型
         img = Image.fromarray(cv.cvtColor(img, cv.COLOR_BGR2RGB))
@@ -965,8 +970,9 @@ def cv2ImgAddText(img, text, left, top, textColor=(0, 255, 0), textSize=20):
     # 转换回OpenCV格式
     return cv.cvtColor(np.asarray(img), cv.COLOR_RGB2BGR)
 
-
 # 查询函数，输入穴位名，输出在Name中的位置下标
+
+
 def FindAcupoint(acupointName=""):
     n = 0
     for i in range(2):
@@ -1012,8 +1018,9 @@ def color_depth_image(depth_image):
 
     return depth_color_image
 
-
 # 穴位连线
+
+
 def Find_meridians(meridianName):
     i = merideans.index(meridianName)
 
