@@ -5,15 +5,13 @@ from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QHBoxLayou
 from PyQt5.QtGui import QPixmap, QImage
 from PyQt5.QtCore import Qt, QTimer
 from PIL import Image, ImageDraw, ImageFont
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 from PoseModule import PoseDetector
 from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
 import math
 
-
-
-
-
+from gui import  Ui_MainWindow
 
 # import serial
 # import time
@@ -24,6 +22,7 @@ from HandTrackingModule import HandDetector
 
 sys.path.insert(1, './pyKinectAzure/')
 from pyKinectAzure import pyKinectAzure, _k4a
+
 image = np.ndarray((720, 1200, 3))
 
 depth_image = np.ndarray((720, 1200, 3))
@@ -506,7 +505,7 @@ class GUI(QWidget):
 # 并发线程一，调用深度摄像头并获得image和depth_image
 
 
-def Kinect_Capture():
+def Kinect_Capture(ui):
     # 添加 Azure Kinect SDK 路径
     modulePath = 'C:\\Program Files\\Azure Kinect SDK v1.4.1\\sdk\\windows-desktop\\amd64\\release\\bin\\k4a.dll'
     pyK4A = pyKinectAzure(modulePath)
@@ -539,7 +538,8 @@ def Kinect_Capture():
             print(image)
             MP(image)
 
-            cv.imshow('image', image)
+            ui.updateImage(image)
+            # cv.imshow('image', image)
 
             FindAcupoints()
             k = cv.waitKey(25)
@@ -551,6 +551,8 @@ def Kinect_Capture():
         pyK4A.capture_release()
 
         k = cv.waitKey(25)
+
+
         if k == 27:  # Esc
             break
 
@@ -1084,18 +1086,29 @@ def Find_meridians(meridianName):
                             thickness=2)
 
 
+
 if __name__ == '__main__':
-    # cv.imshow('image', image)
-    # Kinect_Capture()
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    # # 图片路径
+    img_path = "testRes/image.jpg"
+    # # 通过cv读取图片
+    img = cv.imread(img_path)
+    ui.updateImage(img)
+
+
+    Kinect_Capture(ui)
     # lock = threading.Lock()
-    first_thread = threading.Thread(target=Kinect_Capture)
-    first_thread.start()
-    second_thread = threading.Thread(target=MP, args=(image, ))
-    second_thread.start()
+    # first_thread = threading.Thread(target=Kinect_Capture)
+    # first_thread.start()
+    # second_thread = threading.Thread(target=MP, args=(image, ))
+    # second_thread.start()
+    #
+    # third_thread = threading.Thread(target=FindAcupoints)
+    # third_thread.start()
 
-    third_thread = threading.Thread(target=FindAcupoints)
-    third_thread.start()
+    # sys.exit(app.exec_())
 
-# ui = showMain()
-# 更新图片
-# ui.updateImage(img)

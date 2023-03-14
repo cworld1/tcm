@@ -11,7 +11,7 @@ import cv2
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
+import sys
 class Ui_MainWindow(object):
     # 更新图片
     def updateImage(self, img):
@@ -120,14 +120,14 @@ def mainShow():
     # 通过cv读取图片
     # img = cv2.imread(img_path)
 
-    import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    return ui
-    # sys.exit(app.exec_())
+
+    return ui, app
 
 
-mainShow()
+
+
