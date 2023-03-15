@@ -18,6 +18,11 @@ from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIs
 from components.box import ComboCheckBox, printList
 
 
+def play_video():
+    print("nihao")
+
+def pause():
+    print("pause")
 class Ui_MainWindow(object):
     # 更新图片
     def updateImage(self, img):
@@ -100,9 +105,12 @@ class Ui_MainWindow(object):
                                       "  color: #066335;\n"
                                       "}")
         self.pushButton.setObjectName("pushButton")
+        # self.pushButton.clicked.connect(play_video)
+
         self.horizontalLayout.addWidget(self.pushButton)
         self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.pushButton_2.setMinimumSize(QtCore.QSize(0, 40))
+        # self.pushButton_2.clicked.connect(pause)
         self.pushButton_2.setStyleSheet("QPushButton {\n"
                                         "  background-color: #ffffff;\n"
                                         "  border: 1px solid #dcdfe6;\n"
@@ -132,7 +140,6 @@ class Ui_MainWindow(object):
                                  "border-radius:7px;")
         self.label.setObjectName("label")
         # 设置窗口尺寸
-        # self.label.resize(1200, 720)
 
         # 添加深度图像放置位置
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
@@ -151,7 +158,7 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-    # 建立UI翻译，注入文本内容
+        # 建立UI翻译，注入文本内容
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -167,6 +174,7 @@ class Ui_MainWindow(object):
 # 执行主程序
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

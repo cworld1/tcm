@@ -84,7 +84,6 @@ class ComboCheckBox(QComboBox):
         self.items = itemlist
         self.items.insert(0, '全部')
         self.row_num = len(self.items)
-
         self.Selectedrow_num = 0
         self.qCheckBox = []
         self.qLineEdit = QLineEdit()

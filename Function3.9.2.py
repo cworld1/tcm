@@ -299,8 +299,10 @@ while cap.isOpened():  # 获取图像
 
     MP(image)
     FindAcupoints()
-   (x, y), img = FindAcupoint(image, "尺泽", 0)
 
-    if cv.waitKey(1) & 0xFF == 27:
-        break
+
+
+
+
++
 cap.release()

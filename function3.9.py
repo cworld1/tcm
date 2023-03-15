@@ -5,7 +5,7 @@ from PoseModule import PoseDetector
 from HandTrackingModule import HandDetector
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
-import tqdm
+# import tqdm
 import time
 meridians = ["1", "2", "3", "4", "5"]
 # [0/1][1-5][1-20]
