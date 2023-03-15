@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gui.ui'
+# Form implementation generated from reading ui file 'gui_origin.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         # 设定主窗口
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1548, 789)
+        MainWindow.resize(1714, 772)
         # 初步建立布局
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -46,7 +46,6 @@ class Ui_MainWindow(object):
             self.comboBox.addItem("")
         self.verticalLayout.addWidget(self.comboBox)
         self.comboBox_2 = QtWidgets.QComboBox(self.verticalLayoutWidget)
-        self.comboBox_2.setGeometry(QtCore.QRect(90, 210, 231, 31))
         self.comboBox_2.setObjectName("comboBox_2")
         for i in range(len(acupoints)):
             self.comboBox_2.addItem("")
@@ -54,31 +53,78 @@ class Ui_MainWindow(object):
 
         # 左侧布局 2，包含了两个 QPushButton
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(30, 280, 271, 80))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(90, 320, 271, 80))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(
             self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout.addWidget(self.pushButton_2)
         self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton.setMinimumSize(QtCore.QSize(0, 40))
+        self.pushButton.setStyleSheet("QPushButton {\n"
+                                      "  background-color: #ffffff;\n"
+                                      "  border: 1px solid #dcdfe6;\n"
+                                      "  padding: 10px;\n"
+                                      "  border-radius: 7px;\n"
+                                      "  font: bold 17px;\n"
+                                      "}\n"
+                                      "\n"
+                                      "QPushButton:hover {\n"
+                                      "  background-color: #bff1d8;\n"
+                                      "  color: #066335;\n"
+                                      "}\n"
+                                      "\n"
+                                      "QPushButton:pressed,\n"
+                                      "QPushButton:checked {\n"
+                                      "  border-color: #44b17b;\n"
+                                      "  color: #066335;\n"
+                                      "}")
         self.pushButton.setObjectName("pushButton")
         self.horizontalLayout.addWidget(self.pushButton)
+        self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_2.setMinimumSize(QtCore.QSize(0, 40))
+        self.pushButton_2.setStyleSheet("QPushButton {\n"
+                                        "  background-color: #ffffff;\n"
+                                        "  border: 1px solid #dcdfe6;\n"
+                                        "  padding: 10px;\n"
+                                        "  border-radius: 7px;\n"
+                                        "  font: bold 17px;\n"
+                                        "}\n"
+                                        "\n"
+                                        "QPushButton:hover {\n"
+                                        "  background-color: #bff1d8;\n"
+                                        "  color: #066335;\n"
+                                        "}\n"
+                                        "\n"
+                                        "QPushButton:pressed,\n"
+                                        "QPushButton:checked {\n"
+                                        "  border-color: #44b17b;\n"
+                                        "  color: #066335;\n"
+                                        "}")
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.horizontalLayout.addWidget(self.pushButton_2)
 
         # 展示图像，此处需要集成 Kinect 图像注入刷新
         # 设置展示控件
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(320, 10, 1200, 720))
+        self.label.setGeometry(QtCore.QRect(490, 30, 1200, 720))
+        self.label.setStyleSheet("background-color: rgb(221, 221, 221);\n"
+                                 "border-radius:7px;")
         self.label.setObjectName("label")
+
+        # 添加深度图像放置位置
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(90, 470, 271, 181))
+        self.label_2.setStyleSheet("background-color: rgb(221, 221, 221);\n"
+                                   "border-radius:7px;")
+        self.label_2.setObjectName("label_2")
         # 设置窗口尺寸
         # self.label.resize(1200, 720)
 
         # 主窗口
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1548, 28))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1714, 28))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -98,8 +144,10 @@ class Ui_MainWindow(object):
         for i in range(len(acupoints)):
             self.comboBox_2.setItemText(
                 i, _translate("MainWindow", acupoints[i]))
-        self.pushButton.setText(_translate("MainWindow", "暂停"))
-        self.pushButton_2.setText(_translate("MainWindow", "播放"))
+        self.pushButton.setText(_translate("MainWindow", "播放"))
+        self.pushButton_2.setText(_translate("MainWindow", "暂停"))
+        self.label.setText(_translate("MainWindow", "CameraImage"))
+        self.label_2.setText(_translate("MainWindow", "DeepthImage"))
 
 
 # 执行主程序

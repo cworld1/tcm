@@ -21,3 +21,10 @@ poetry install
 ```bash
 poetry run python ./main.py
 ```
+
+## UI Design Scheme
+
+- Main color: `#066335`
+- Background color: `#BFF1D8`
+- Border color: `#44B17B`
+- Border radius: `7px`

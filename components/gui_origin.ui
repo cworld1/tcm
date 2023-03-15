@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1548</width>
-    <height>789</height>
+    <width>1714</width>
+    <height>772</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>110</y>
+      <x>90</x>
+      <y>120</y>
       <width>271</width>
       <height>141</height>
      </rect>
@@ -78,24 +78,76 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>280</y>
+      <x>90</x>
+      <y>320</y>
       <width>271</width>
       <height>80</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pushButton">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+  background-color: #ffffff;
+  border: 1px solid #dcdfe6;
+  padding: 10px;
+  border-radius: 7px;
+  font: bold 17px;
+}
+
+QPushButton:hover {
+  background-color: #bff1d8;
+  color: #066335;
+}
+
+QPushButton:pressed,
+QPushButton:checked {
+  border-color: #44b17b;
+  color: #066335;
+}</string>
+       </property>
        <property name="text">
-        <string>暂停</string>
+        <string>播放</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+  background-color: #ffffff;
+  border: 1px solid #dcdfe6;
+  padding: 10px;
+  border-radius: 7px;
+  font: bold 17px;
+}
+
+QPushButton:hover {
+  background-color: #bff1d8;
+  color: #066335;
+}
+
+QPushButton:pressed,
+QPushButton:checked {
+  border-color: #44b17b;
+  color: #066335;
+}</string>
+       </property>
        <property name="text">
-        <string>播放</string>
+        <string>暂停</string>
        </property>
       </widget>
      </item>
@@ -104,14 +156,35 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>10</y>
+      <x>490</x>
+      <y>30</y>
       <width>1200</width>
       <height>720</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(221, 221, 221);
+border-radius:7px;</string>
+    </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>CameraImage</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>470</y>
+      <width>271</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(221, 221, 221);
+border-radius:7px;</string>
+    </property>
+    <property name="text">
+     <string>DeepthImage</string>
     </property>
    </widget>
   </widget>
@@ -120,7 +193,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1548</width>
+     <width>1714</width>
      <height>28</height>
     </rect>
    </property>
