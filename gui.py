@@ -33,11 +33,12 @@ class Ui_MainWindow(object):
 
         # 左侧布局 1，包含了两个 QComboBox
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(90, 120, 271, 141))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(40, 100, 421, 141))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.b_verticalLayout = QtWidgets.QVBoxLayout(
+            self.verticalLayoutWidget)
+        self.b_verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.b_verticalLayout.setObjectName("b_verticalLayout")
         # ComboBox 1
         self.merideansBox = ComboCheckBox(merideans)
         self.merideansBox.setMaximumSize(QtCore.QSize(16777215, 45))
@@ -65,7 +66,8 @@ class Ui_MainWindow(object):
 
         # 左侧布局 2，包含了两个 QPushButton
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(90, 320, 271, 80))
+        self.horizontalLayoutWidget.setGeometry(
+            QtCore.QRect(100, 390, 281, 80))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(
             self.horizontalLayoutWidget)
@@ -130,10 +132,15 @@ class Ui_MainWindow(object):
 
         # 添加深度图像放置位置
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(50, 450, 401, 291))
+        self.label_2.setGeometry(QtCore.QRect(30, 480, 431, 261))
         self.label_2.setStyleSheet("background-color: rgb(221, 221, 221);\n"
                                    "border-radius:7px;")
         self.label_2.setObjectName("label_2")
+
+        # 添加图标
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(40, 30, 117, 67))
+        self.label_3.setObjectName("label_3")
 
         # 主窗口
         MainWindow.setCentralWidget(self.centralwidget)
@@ -170,7 +177,7 @@ if __name__ == "__main__":
 
     # 测试
     # 图片路径
-    img_path = "testRes/image.jpg"
+    img_path = "testRes/test.jpg"
     # 通过cv读取图片
     img = cv2.imread(img_path)
     ui.updateImage(img)
