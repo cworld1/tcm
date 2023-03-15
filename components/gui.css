@@ -1,3 +1,4 @@
+/* PushButton */
 QPushButton {
   background-color: #ffffff;
   border: 1px solid #dcdfe6;
@@ -13,6 +14,26 @@ QPushButton:hover {
 
 QPushButton:pressed,
 QPushButton:checked {
+  border-color: #44b17b;
+  color: #066335;
+}
+
+QComboBox {
+  background-color: #ffffff;
+  border: 1px solid #dcdfe6;
+  padding: 10px;
+  border-radius: 7px;
+  font: bold 17px;
+}
+
+/* ComboBox */
+QComboBox:hover {
+  background-color: #bff1d8;
+  color: #066335;
+}
+
+QComboBox:pressed,
+QComboBox:checked {
   border-color: #44b17b;
   color: #066335;
 }
