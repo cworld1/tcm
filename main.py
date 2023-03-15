@@ -505,7 +505,7 @@ class GUI(QWidget):
 # 并发线程一，调用深度摄像头并获得image和depth_image
 
 
-def Kinect_Capture(ui):
+def Kinect_Capture():
     # 添加 Azure Kinect SDK 路径
     modulePath = 'C:\\Program Files\\Azure Kinect SDK v1.4.1\\sdk\\windows-desktop\\amd64\\release\\bin\\k4a.dll'
     pyK4A = pyKinectAzure(modulePath)
@@ -535,8 +535,7 @@ def Kinect_Capture(ui):
             image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
             depth_image = pyK4A.transform_depth_to_color(
                 depth_image_handle, color_image_handle)
-            print(image)
-            MP(image)
+            # MP(image)
 
             ui.updateImage(image)
             # cv.imshow('image', image)
@@ -563,12 +562,10 @@ def Kinect_Capture(ui):
 # 并发线程二，在得到image和depth_image后进行检测，数据更新在LH_Landmarks, RH_Landmarks, Pose_Landmarks
 
 
-def MP(image):
-    print(image)
+def MP():
     global LH_Landmarks, RH_Landmarks, Pose_Landmarks
 
     # cap = cv.VideoCapture(0)
-    #
     # success, image = cap.read()
     Hands, img = handDetector.findHands(image, draw=False)
     img = poseDetector.findPose(img, draw=False)
@@ -593,7 +590,6 @@ def MP(image):
     if Poselist:
         Pose_Landmarks = Poselist
 
-    # print(Pose_Landmarks)
 
 
 # 并发线程三，在更新LH_Landmarks, RH_Landmarks, Pose_Landmarks后进行计算，数据更新在AcupointsPosition
@@ -902,7 +898,7 @@ def FindAcupoints():
                     int((cx26 + cx28) // 2), int((cy28 + cy26) // 2))
                 AcupointsPosition[1][1][42] = (int(cx28), int(cy28))
 
-    # print(AcupointsPosition)
+
 
 
 # 下拉复选框插件
@@ -1088,27 +1084,24 @@ def Find_meridians(meridianName):
 
 
 if __name__ == '__main__':
+    global ui
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    # # 图片路径
-    img_path = "testRes/image.jpg"
-    # # 通过cv读取图片
-    img = cv.imread(img_path)
-    ui.updateImage(img)
 
 
-    Kinect_Capture(ui)
+
     # lock = threading.Lock()
-    # first_thread = threading.Thread(target=Kinect_Capture)
-    # first_thread.start()
-    # second_thread = threading.Thread(target=MP, args=(image, ))
-    # second_thread.start()
-    #
-    # third_thread = threading.Thread(target=FindAcupoints)
-    # third_thread.start()
 
-    # sys.exit(app.exec_())
+    first_thread = threading.Thread(target=Kinect_Capture)
+    first_thread.start()
+    second_thread = threading.Thread(target=MP)
+    second_thread.start()
+
+    third_thread = threading.Thread(target=FindAcupoints)
+    third_thread.start()
+
+    sys.exit(app.exec_())
 
