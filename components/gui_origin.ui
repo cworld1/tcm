@@ -17,13 +17,13 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>120</y>
-      <width>271</width>
+      <x>40</x>
+      <y>100</y>
+      <width>421</width>
       <height>141</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="b_verticalLayout">
      <item>
       <widget class="QComboBox" name="comboBox">
        <property name="maximumSize">
@@ -49,16 +49,6 @@
        <item>
         <property name="text">
          <string>2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>4</string>
         </property>
        </item>
       </widget>
@@ -90,11 +80,6 @@
          <string>2</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string>3</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>
@@ -102,13 +87,13 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>320</y>
-      <width>271</width>
+      <x>100</x>
+      <y>390</y>
+      <width>281</width>
       <height>80</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="c_horizontalLayout">
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="minimumSize">
@@ -177,7 +162,7 @@ QPushButton:checked {
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="e_cameraImage">
     <property name="geometry">
      <rect>
       <x>490</x>
@@ -194,13 +179,13 @@ border-radius:7px;</string>
      <string>CameraImage</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="d_deepthImage">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>450</y>
-      <width>401</width>
-      <height>291</height>
+      <x>30</x>
+      <y>480</y>
+      <width>431</width>
+      <height>261</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -209,6 +194,23 @@ border-radius:7px;</string>
     </property>
     <property name="text">
      <string>DeepthImage</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="a_logo">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>30</y>
+      <width>117</width>
+      <height>67</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(221, 221, 221);
+border-radius:7px;</string>
+    </property>
+    <property name="text">
+     <string>Logo</string>
     </property>
    </widget>
   </widget>
