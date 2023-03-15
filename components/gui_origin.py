@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gui_origin.ui'
+# Form implementation generated from reading ui file 'components/gui_origin.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -24,7 +24,14 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.comboBox = QtWidgets.QComboBox(self.verticalLayoutWidget)
-        self.comboBox.setMaximumSize(QtCore.QSize(600, 16777215))
+        self.comboBox.setMaximumSize(QtCore.QSize(16777215, 45))
+        self.comboBox.setStyleSheet("QComboBox {\n"
+                                    "  background-color: #ffffff;\n"
+                                    "  border: 1px solid #dcdfe6;\n"
+                                    "  padding: 10px;\n"
+                                    "  border-radius: 7px;\n"
+                                    "  font: bold 17px;\n"
+                                    "}")
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
@@ -32,6 +39,14 @@ class Ui_MainWindow(object):
         self.comboBox.addItem("")
         self.verticalLayout.addWidget(self.comboBox)
         self.comboBox_2 = QtWidgets.QComboBox(self.verticalLayoutWidget)
+        self.comboBox_2.setMaximumSize(QtCore.QSize(16777215, 45))
+        self.comboBox_2.setStyleSheet("QComboBox {\n"
+                                      "  background-color: #ffffff;\n"
+                                      "  border: 1px solid #dcdfe6;\n"
+                                      "  padding: 10px;\n"
+                                      "  border-radius: 7px;\n"
+                                      "  font: bold 17px;\n"
+                                      "}")
         self.comboBox_2.setObjectName("comboBox_2")
         self.comboBox_2.addItem("")
         self.comboBox_2.addItem("")
@@ -94,7 +109,7 @@ class Ui_MainWindow(object):
                                  "border-radius:7px;")
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(90, 470, 271, 181))
+        self.label_2.setGeometry(QtCore.QRect(50, 450, 401, 291))
         self.label_2.setStyleSheet("background-color: rgb(221, 221, 221);\n"
                                    "border-radius:7px;")
         self.label_2.setObjectName("label_2")
