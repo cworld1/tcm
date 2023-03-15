@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1548, 789)
+        MainWindow.resize(1714, 772)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(30, 110, 271, 141))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(90, 120, 271, 141))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -38,24 +38,69 @@ class Ui_MainWindow(object):
         self.comboBox_2.addItem("")
         self.verticalLayout.addWidget(self.comboBox_2)
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(30, 280, 271, 80))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(90, 320, 271, 80))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(
             self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout.addWidget(self.pushButton_2)
         self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton.setMinimumSize(QtCore.QSize(0, 40))
+        self.pushButton.setStyleSheet("QPushButton {\n"
+                                      "  background-color: #ffffff;\n"
+                                      "  border: 1px solid #dcdfe6;\n"
+                                      "  padding: 10px;\n"
+                                      "  border-radius: 7px;\n"
+                                      "  font: bold 17px;\n"
+                                      "}\n"
+                                      "\n"
+                                      "QPushButton:hover {\n"
+                                      "  background-color: #bff1d8;\n"
+                                      "  color: #066335;\n"
+                                      "}\n"
+                                      "\n"
+                                      "QPushButton:pressed,\n"
+                                      "QPushButton:checked {\n"
+                                      "  border-color: #44b17b;\n"
+                                      "  color: #066335;\n"
+                                      "}")
         self.pushButton.setObjectName("pushButton")
         self.horizontalLayout.addWidget(self.pushButton)
+        self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_2.setMinimumSize(QtCore.QSize(0, 40))
+        self.pushButton_2.setStyleSheet("QPushButton {\n"
+                                        "  background-color: #ffffff;\n"
+                                        "  border: 1px solid #dcdfe6;\n"
+                                        "  padding: 10px;\n"
+                                        "  border-radius: 7px;\n"
+                                        "  font: bold 17px;\n"
+                                        "}\n"
+                                        "\n"
+                                        "QPushButton:hover {\n"
+                                        "  background-color: #bff1d8;\n"
+                                        "  color: #066335;\n"
+                                        "}\n"
+                                        "\n"
+                                        "QPushButton:pressed,\n"
+                                        "QPushButton:checked {\n"
+                                        "  border-color: #44b17b;\n"
+                                        "  color: #066335;\n"
+                                        "}")
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.horizontalLayout.addWidget(self.pushButton_2)
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(320, 10, 1200, 720))
+        self.label.setGeometry(QtCore.QRect(490, 30, 1200, 720))
+        self.label.setStyleSheet("background-color: rgb(221, 221, 221);\n"
+                                 "border-radius:7px;")
         self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(90, 470, 271, 181))
+        self.label_2.setStyleSheet("background-color: rgb(221, 221, 221);\n"
+                                   "border-radius:7px;")
+        self.label_2.setObjectName("label_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1548, 28))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1714, 28))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -75,9 +120,10 @@ class Ui_MainWindow(object):
         self.comboBox_2.setItemText(0, _translate("MainWindow", "1"))
         self.comboBox_2.setItemText(1, _translate("MainWindow", "2"))
         self.comboBox_2.setItemText(2, _translate("MainWindow", "3"))
-        self.pushButton_2.setText(_translate("MainWindow", "暂停"))
         self.pushButton.setText(_translate("MainWindow", "播放"))
-        self.label.setText(_translate("MainWindow", "TextLabel"))
+        self.pushButton_2.setText(_translate("MainWindow", "暂停"))
+        self.label.setText(_translate("MainWindow", "CameraImage"))
+        self.label_2.setText(_translate("MainWindow", "DeepthImage"))
 
 
 if __name__ == "__main__":
