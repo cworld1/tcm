@@ -11,7 +11,8 @@ from PoseModule import PoseDetector
 from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
 import math
 
-from gui import  Ui_MainWindow, printList
+from gui import Ui_MainWindow, printList
+from hooks.utils import  updateImage
 
 # import serial
 # import time
@@ -36,6 +37,10 @@ handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 
 
+def changeTime(time = 25):
+    global waitTime
+    waitTime = time
+
 # 一个UI希望集成上述函数，有一个720*1200的视频显示区域，有两个下拉式复选框组件，一个是穴位acupoints，另一个是经脉meridians，
 # 其本身应该有众多共享的变量
 
@@ -58,7 +63,6 @@ def Kinect_Capture():
     serial_number = pyK4A.device_get_serialnum()
 
     global image, depth_image
-    # flag = True
     while (True):
         pyK4A.device_get_capture()  # Get capture
 
@@ -73,11 +77,12 @@ def Kinect_Capture():
                 depth_image_handle, color_image_handle)
             # MP(image)
 
-            ui.updateImage(image)
+            updateImage(ui, image)
             # cv.imshow('image', image)
 
             FindAcupoints()
-            k = cv.waitKey(25)
+
+            k = cv.waitKey(waitTime)
             if k == 27:  # Esc
                 break
 
@@ -439,7 +444,6 @@ def FindAcupoints():
 
 # 下拉复选框插件
 
-
 class ComboCheckBox(QComboBox):
     def __init__(self, items):  # items==[str,str...]
         super(ComboCheckBox, self).__init__()
@@ -629,9 +633,6 @@ if __name__ == '__main__':
     ui.merideansBox.signa.connect(printList)
     MainWindow.show()
 
-
-
-    # lock = threading.Lock()
 
     first_thread = threading.Thread(target=Kinect_Capture)
     first_thread.start()
