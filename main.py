@@ -12,12 +12,13 @@ from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIs
 import math
 
 from gui import Ui_MainWindow, printList
-from hooks.utils import  updateImage
-
+from hooks.utils import updateImage, play_video
 # import serial
 # import time
 import threading
 import sys
+
+
 
 from HandTrackingModule import HandDetector
 
@@ -37,16 +38,17 @@ handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 
 
-def changeTime(time = 25):
-    global waitTime
-    waitTime = time
+
 
 # 一个UI希望集成上述函数，有一个720*1200的视频显示区域，有两个下拉式复选框组件，一个是穴位acupoints，另一个是经脉meridians，
 # 其本身应该有众多共享的变量
 
 
+
+
 # 并发线程一，调用深度摄像头并获得image和depth_image
 def Kinect_Capture():
+    global image, depth_image, flag,pyK4A,device_config
     # 添加 Azure Kinect SDK 路径
     modulePath = 'C:\\Program Files\\Azure Kinect SDK v1.4.1\\sdk\\windows-desktop\\amd64\\release\\bin\\k4a.dll'
     pyK4A = pyKinectAzure(modulePath)
@@ -56,61 +58,42 @@ def Kinect_Capture():
     device_config.color_resolution = _k4a.K4A_COLOR_RESOLUTION_720P
     device_config.depth_mode = _k4a.K4A_DEPTH_MODE_WFOV_2X2BINNED
 
-    # 打开摄像头
-    pyK4A.device_start_cameras(device_config)
 
     # 获取相机序列号
     serial_number = pyK4A.device_get_serialnum()
 
-    global image, depth_image
-    while (True):
-        pyK4A.device_get_capture()  # Get capture
 
-        # 获得三种数据
-        depth_image_handle = pyK4A.capture_get_depth_image()
-        color_image_handle = pyK4A.capture_get_color_image()
-
-        if depth_image_handle and color_image_handle:
-            # 将获取到的图像转换为numpy矩阵
-            image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
-            depth_image = pyK4A.transform_depth_to_color(
-                depth_image_handle, color_image_handle)
-            # MP(image)
-
-            updateImage(ui, image)
-            # cv.imshow('image', image)
-
-            FindAcupoints()
-
-            k = cv.waitKey(waitTime)
-            if k == 27:  # Esc
-                break
-
-        pyK4A.image_release(depth_image_handle)
-        pyK4A.image_release(color_image_handle)
-        pyK4A.capture_release()
-
-        k = cv.waitKey(25)
-
-
-        if k == 27:  # Esc
-            break
-
-    pyK4A.device_stop_cameras()
-    pyK4A.device_close()
+    flag = True
+    play_video()
+    # while (flag):
+    #     pyK4A.device_get_capture()  # Get capture
+    #     # 获得三种数据
+    #     depth_image_handle = pyK4A.capture_get_depth_image()
+    #     color_image_handle = pyK4A.capture_get_color_image()
+    #     if depth_image_handle and color_image_handle:
+    #         # 将获取到的图像转换为numpy矩阵
+    #         image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
+    #         depth_image = pyK4A.transform_depth_to_color(
+    #             depth_image_handle, color_image_handle)
+    #         updateImage(ui, image)
+    #         k = cv.waitKey(25)
+    #
+    #     pyK4A.image_release(depth_image_handle)
+    #     pyK4A.image_release(color_image_handle)
+    #     pyK4A.capture_release()
+    #     k = cv.waitKey(25)
 
 
 # 并发线程二，在得到image和depth_image后进行检测，数据更新在LH_Landmarks, RH_Landmarks, Pose_Landmarks
 
-
 def MP():
     global LH_Landmarks, RH_Landmarks, Pose_Landmarks
-
     # cap = cv.VideoCapture(0)
     # success, image = cap.read()
     Hands, img = handDetector.findHands(image, draw=False)
     img = poseDetector.findPose(img, draw=False)
     Poselist, bboxInfo = poseDetector.findPosition(img, draw=False)
+
 
     if Hands:
         hand0 = Hands[0]
@@ -122,7 +105,6 @@ def MP():
 
         if len(Hands) > 1:
             hand1 = Hands[1]
-
             if hand1["type"] == "Left":
                 LH_Landmarks = hand1["lmList"]
             else:
@@ -134,8 +116,6 @@ def MP():
 
 
 # 并发线程三，在更新LH_Landmarks, RH_Landmarks, Pose_Landmarks后进行计算，数据更新在AcupointsPosition
-
-
 def FindAcupoints():
     if Pose_Landmarks:
         cx0, cy0 = Pose_Landmarks[0][1], Pose_Landmarks[0][2]
@@ -439,11 +419,7 @@ def FindAcupoints():
                     int((cx26 + cx28) // 2), int((cy28 + cy26) // 2))
                 AcupointsPosition[1][1][42] = (int(cx28), int(cy28))
 
-
-
-
 # 下拉复选框插件
-
 class ComboCheckBox(QComboBox):
     def __init__(self, items):  # items==[str,str...]
         super(ComboCheckBox, self).__init__()
@@ -595,8 +571,6 @@ def color_depth_image(depth_image):
 
 
 # 穴位连线
-
-
 def Find_meridians(meridianName):
     i = merideans.index(meridianName)
 
@@ -642,5 +616,7 @@ if __name__ == '__main__':
     third_thread = threading.Thread(target=FindAcupoints)
     third_thread.start()
 
+    pyK4A.device_stop_cameras()
+    pyK4A.device_close()
     sys.exit(app.exec_())
 
