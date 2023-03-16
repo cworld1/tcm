@@ -239,18 +239,21 @@ while (True):
 
         MP(color_image)
         FindAcupoints()
-        xy, image = FindAcupoint(color_image, "尺泽", 0)
+        xy, image = FindAcupoint(color_image, "库房", 0)
 
-        x, y, z = Projection(640.612671, 367.137726, 607.669800, 607.552429, 360, 600, depth_color_image[360][600])
+        # if xy[0] < 720 and xy[1] < 1200:
+        x, y, z = Projection(640.612671, 367.137726, 607.669800, 607.552429, xy[0], xy[1], depth_color_image[xy[1]][xy[0]])
 
         print("x: " + str(x) + '   y: ' + str(y) + '   z: ' + str(z))
 
-        img = cv.Mat(color_image)
-
-        cv.circle(cv.Mat(color_image), (360, 600), 7, (255, 0, 255), cv.FILLED)
+        img = color_image.astype(np.uint8).copy()
+        if xy[0] < 720 and xy[1] < 1200:
+            cv.circle(img, xy, 7, (255, 0, 255), cv.FILLED)
 
         cv.namedWindow(' Color Image', cv.WINDOW_NORMAL)
-        cv.imshow(' Color Image', color_image)
+        cv.imshow(' Color Image', img)
+        cv.namedWindow(' Depth Color Image', cv.WINDOW_NORMAL)
+        cv.imshow(' Depth Color Image', depth_color_image)
         k = cv.waitKey(25)
         if k == 27:  # Esc
             break
