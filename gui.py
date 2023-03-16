@@ -50,7 +50,7 @@ class Ui_MainWindow(object):
                                         "  font: bold 17px;\n"
                                         "}")
         self.merideansBox.setObjectName("merideansBox")
-        self.verticalLayout.addWidget(self.merideansBox)
+        self.b_verticalLayout.addWidget(self.merideansBox)
         # ComboBox 2
         self.acupointsBox = ComboCheckBox(acupoints)
         self.acupointsBox.setMaximumSize(QtCore.QSize(16777215, 45))
@@ -62,7 +62,7 @@ class Ui_MainWindow(object):
                                         "  font: bold 17px;\n"
                                         "}")
         self.acupointsBox.setObjectName("acupointsBox")
-        self.verticalLayout.addWidget(self.acupointsBox)
+        self.b_verticalLayout.addWidget(self.acupointsBox)
 
         # 左侧布局 2，包含了两个 QPushButton
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
