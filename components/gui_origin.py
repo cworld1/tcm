@@ -18,11 +18,12 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(90, 120, 271, 141))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(40, 100, 421, 141))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.b_verticalLayout = QtWidgets.QVBoxLayout(
+            self.verticalLayoutWidget)
+        self.b_verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.b_verticalLayout.setObjectName("b_verticalLayout")
         self.comboBox = QtWidgets.QComboBox(self.verticalLayoutWidget)
         self.comboBox.setMaximumSize(QtCore.QSize(16777215, 45))
         self.comboBox.setStyleSheet("QComboBox {\n"
@@ -35,9 +36,7 @@ class Ui_MainWindow(object):
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.verticalLayout.addWidget(self.comboBox)
+        self.b_verticalLayout.addWidget(self.comboBox)
         self.comboBox_2 = QtWidgets.QComboBox(self.verticalLayoutWidget)
         self.comboBox_2.setMaximumSize(QtCore.QSize(16777215, 45))
         self.comboBox_2.setStyleSheet("QComboBox {\n"
@@ -50,15 +49,15 @@ class Ui_MainWindow(object):
         self.comboBox_2.setObjectName("comboBox_2")
         self.comboBox_2.addItem("")
         self.comboBox_2.addItem("")
-        self.comboBox_2.addItem("")
-        self.verticalLayout.addWidget(self.comboBox_2)
+        self.b_verticalLayout.addWidget(self.comboBox_2)
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(90, 320, 271, 80))
+        self.horizontalLayoutWidget.setGeometry(
+            QtCore.QRect(100, 390, 281, 80))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(
+        self.c_horizontalLayout = QtWidgets.QHBoxLayout(
             self.horizontalLayoutWidget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.c_horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.c_horizontalLayout.setObjectName("c_horizontalLayout")
         self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.pushButton.setMinimumSize(QtCore.QSize(0, 40))
         self.pushButton.setStyleSheet("QPushButton {\n"
@@ -80,7 +79,7 @@ class Ui_MainWindow(object):
                                       "  color: #066335;\n"
                                       "}")
         self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout.addWidget(self.pushButton)
+        self.c_horizontalLayout.addWidget(self.pushButton)
         self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.pushButton_2.setMinimumSize(QtCore.QSize(0, 40))
         self.pushButton_2.setStyleSheet("QPushButton {\n"
@@ -102,17 +101,22 @@ class Ui_MainWindow(object):
                                         "  color: #066335;\n"
                                         "}")
         self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout.addWidget(self.pushButton_2)
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(490, 30, 1200, 720))
-        self.label.setStyleSheet("background-color: rgb(221, 221, 221);\n"
-                                 "border-radius:7px;")
-        self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(50, 450, 401, 291))
-        self.label_2.setStyleSheet("background-color: rgb(221, 221, 221);\n"
-                                   "border-radius:7px;")
-        self.label_2.setObjectName("label_2")
+        self.c_horizontalLayout.addWidget(self.pushButton_2)
+        self.e_cameraImage = QtWidgets.QLabel(self.centralwidget)
+        self.e_cameraImage.setGeometry(QtCore.QRect(490, 30, 1200, 720))
+        self.e_cameraImage.setStyleSheet("background-color: rgb(221, 221, 221);\n"
+                                         "border-radius:7px;")
+        self.e_cameraImage.setObjectName("e_cameraImage")
+        self.d_deepthImage = QtWidgets.QLabel(self.centralwidget)
+        self.d_deepthImage.setGeometry(QtCore.QRect(30, 480, 431, 261))
+        self.d_deepthImage.setStyleSheet("background-color: rgb(221, 221, 221);\n"
+                                         "border-radius:7px;")
+        self.d_deepthImage.setObjectName("d_deepthImage")
+        self.a_logo = QtWidgets.QLabel(self.centralwidget)
+        self.a_logo.setGeometry(QtCore.QRect(40, 30, 117, 67))
+        self.a_logo.setStyleSheet("background-color: rgb(221, 221, 221);\n"
+                                  "border-radius:7px;")
+        self.a_logo.setObjectName("a_logo")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1714, 28))
@@ -130,15 +134,13 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.comboBox.setItemText(0, _translate("MainWindow", "1"))
         self.comboBox.setItemText(1, _translate("MainWindow", "2"))
-        self.comboBox.setItemText(2, _translate("MainWindow", "3"))
-        self.comboBox.setItemText(3, _translate("MainWindow", "4"))
         self.comboBox_2.setItemText(0, _translate("MainWindow", "1"))
         self.comboBox_2.setItemText(1, _translate("MainWindow", "2"))
-        self.comboBox_2.setItemText(2, _translate("MainWindow", "3"))
         self.pushButton.setText(_translate("MainWindow", "播放"))
         self.pushButton_2.setText(_translate("MainWindow", "暂停"))
-        self.label.setText(_translate("MainWindow", "CameraImage"))
-        self.label_2.setText(_translate("MainWindow", "DeepthImage"))
+        self.e_cameraImage.setText(_translate("MainWindow", "CameraImage"))
+        self.d_deepthImage.setText(_translate("MainWindow", "DeepthImage"))
+        self.a_logo.setText(_translate("MainWindow", "Logo"))
 
 
 if __name__ == "__main__":
