@@ -3,6 +3,8 @@ from PyQt5.QtCore import QTimer, Qt, pyqtSignal
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QComboBox, QVBoxLayout, QLabel, QLineEdit, QListWidget, QCheckBox, \
     QListWidgetItem
+import cv2 as cv
+from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
 
 # 测试数据
 Name = ["尺泽(左)", "孔最", "侠白", "天泉", "郄门", "大横", "归来", "天枢", "库房",
@@ -98,6 +100,23 @@ class ComboCheckBox(QComboBox):
         self.setView(self.qListWidget)
         self.setLineEdit(self.qLineEdit)
 
+    def Display(self):
+        frame = cv.cvtColor(self.image, cv.COLOR_BGR2RGB)
+        h, w, _ = self.image.shape
+        while (True):
+            img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+            h, w, _ = img.shape
+
+            # for i in range(len(self.acupointsButtons.isShow)):
+
+            for i in range(len(self.meridiansButtons.isShow)):
+                print(self.meridiansButtons.isShow[i])
+            qimage = QImage(img.data, w, h, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(qimage)
+            self.video_frame.setPixmap(pixmap)
+
+        QTimer.singleShot(1, self.update_frame)
+
 
 class TestWindow(QWidget):
     def __init__(self):
@@ -114,6 +133,8 @@ class TestWindow(QWidget):
 
 def printList(selectedList):
     print(selectedList)
+    Find_meridians(selectedList)
+# 穴位连线
 
 
 if __name__ == "__main__":

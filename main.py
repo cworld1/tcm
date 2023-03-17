@@ -48,8 +48,12 @@ handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 
 
+
+
 # 一个UI希望集成上述函数，有一个720*1200的视频显示区域，有两个下拉式复选框组件，一个是穴位acupoints，另一个是经脉meridians，
 # 其本身应该有众多共享的变量
+
+
 
 
 # 并发线程一，调用深度摄像头并获得image和depth_image
@@ -69,25 +73,9 @@ def Kinect_Capture():
 
     flag = True
     playVideo()
-    # while (flag):
-    #     pyK4A.device_get_capture()  # Get capture
-    #     # 获得三种数据
-    #     depth_image_handle = pyK4A.capture_get_depth_image()
-    #     color_image_handle = pyK4A.capture_get_color_image()
-    #     if depth_image_handle and color_image_handle:
-    #         # 将获取到的图像转换为numpy矩阵
-    #         image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
-    #         depth_image = pyK4A.transform_depth_to_color(
-    #             depth_image_handle, color_image_handle)
-    #         updateImage(ui, image)
-    #         k = cv.waitKey(25)
-    #
-    #     pyK4A.image_release(depth_image_handle)
-    #     pyK4A.image_release(color_image_handle)
-    #     pyK4A.capture_release()
-    #     k = cv.waitKey(25)
 
 # 并发线程二，在得到image和depth_image后进行检测，数据更新在LH_Landmarks, RH_Landmarks, Pose_Landmarks
+
 def MP():
     global LH_Landmarks, RH_Landmarks, Pose_Landmarks
     # cap = cv.VideoCapture(0)
@@ -95,6 +83,7 @@ def MP():
     Hands, img = handDetector.findHands(image, draw=False)
     img = poseDetector.findPose(img, draw=False)
     Poselist, bboxInfo = poseDetector.findPosition(img, draw=False)
+
 
     if Hands:
         hand0 = Hands[0]
@@ -643,88 +632,9 @@ def FindAcupoints():
                 AcupointsPosition[1][1][41] = (int(cx28), int(cy28))
 
 
-# 下拉复选框插件
-class ComboCheckBox(QComboBox):
-    def __init__(self, items):  # items==[str,str...]
-        super(ComboCheckBox, self).__init__()
-        self.items = items
-        self.items.insert(0, "全部")
-        self.isShow = list(len(self.items))
-
-        self.row_num = len(self.items)
-        self.Selectedrow_num = 0
-        self.qCheckBox = []
-        self.qLineEdit = QLineEdit()
-        self.qLineEdit.setReadOnly(True)
-        self.qListWidget = QListWidget()
-        self.addQCheckBox(0)
-        self.qCheckBox[0].stateChanged.connect(self.All)
-        for i in range(1, self.row_num):
-            self.addQCheckBox(i)
-            self.qCheckBox[i].stateChanged.connect(
-                lambda: self.isshow(self.items[i])
-            )  # 槽函数关联 函数是show（）
-        self.setModel(self.qListWidget.model())
-        self.setView(self.qListWidget)
-        self.setLineEdit(self.qLineEdit)
-        self.setMaxVisibleItems(100)  # 避免滑条的出现引起滑条偷吃标签的问题
-
-    def addQCheckBox(self, i):
-        self.qCheckBox.append(QCheckBox())
-        qItem = QListWidgetItem(self.qListWidget)
-        self.qCheckBox[i].setText(self.items[i])
-        self.qListWidget.setItemWidget(qItem, self.qCheckBox[i])
-
-    def Selectlist(self):
-        Outputlist = []
-        for i in range(1, self.row_num):
-            if self.qCheckBox[i].isChecked() == True:
-                Outputlist.append(self.qCheckBox[i].text())
-        self.Selectedrow_num = len(Outputlist)
-
-        return Outputlist
-
-    # 槽函数
-    def isshow(self, acupointName):
-        i, j, k, n = FindAcupoint(acupointName)
-        self.isShow[n] = (self.isShow[n] + 1) % 2
-        return self.isShow[n]
-
-    def All(self, zhuangtai):
-        if zhuangtai == 2:
-            for i in range(1, self.row_num):
-                self.qCheckBox[i].setChecked(True)
-        elif zhuangtai == 1:
-            if self.Selectedrow_num == 0:
-                self.qCheckBox[0].setCheckState(2)
-        elif zhuangtai == 0:
-            self.clear()
-
-    def clear(self):
-        for i in range(self.row_num):
-            self.qCheckBox[i].setChecked(False)
-
-    def changeitemlist(self, itemlist):
-        self.items = itemlist
-        self.items.insert(0, "全部")
-        self.row_num = len(self.items)
-
-        self.Selectedrow_num = 0
-        self.qCheckBox = []
-        self.qLineEdit = QLineEdit()
-        self.qLineEdit.setReadOnly(True)
-        self.qListWidget = QListWidget()
-        self.addQCheckBox(0)
-        self.qCheckBox[0].stateChanged.connect(self.All)
-        for i in range(1, self.row_num):
-            self.addQCheckBox(i)
-            self.qCheckBox[i].stateChanged.connect(self.show0)
-        self.setModel(self.qListWidget.model())
-        self.setView(self.qListWidget)
-        self.setLineEdit(self.qLineEdit)
-
-
 # 图像上画穴位点
+
+
 def cv2ImgAddText(img, text, left, top, textColor=(0, 255, 0), textSize=20):
     if isinstance(img, np.ndarray):  # 判断是否OpenCV图片类型
         img = Image.fromarray(cv.cvtColor(img, cv.COLOR_BGR2RGB))
@@ -739,17 +649,20 @@ def cv2ImgAddText(img, text, left, top, textColor=(0, 255, 0), textSize=20):
 
 
 # 查询函数，输入穴位名，输出在Name中的位置下标
+
+
 def FindAcupoint(acupointName=""):
     n = 0
     for i in range(2):
         for j in range(5):
             for k in range(len(Name[i][j])):
                 if Name[i][j][k] == acupointName:
-                    return i, j, k, n
-                n = n + 1
+                    return i, j, k
 
 
 # 预测
+
+
 def Projection(u0, v0, fx, fy, u, v, z):
     pixel_coordinate = np.array([[u], [v], [1]])
     intrix_matrix = [[fx, 0, u0], [0, fy, v0], [0, 0, 1]]
@@ -760,11 +673,15 @@ def Projection(u0, v0, fx, fy, u, v, z):
 
 
 # 计算差值
+
+
 def delta(x, y, z, dx, dy, dz):
     return x - dx, y - dy, z - dz
 
 
 # 计算角度
+
+
 def pos_angle(x, y, z):
     theta_1 = math.atan2(x, z) * 180 / math.pi
     theta_2 = math.atan2(y, z) * 180 / math.pi
@@ -772,6 +689,8 @@ def pos_angle(x, y, z):
 
 
 # 上色
+
+
 def color_depth_image(depth_image):
     # 实现将原图片转换为uint8类型
     depth_color_image = cv.convertScaleAbs(depth_image, alpha=0.05)
@@ -779,55 +698,6 @@ def color_depth_image(depth_image):
     depth_color_image = cv.applyColorMap(depth_color_image, cv.COLORMAP_JET)
 
     return depth_color_image
-
-
-# 穴位连线
-def Find_meridians(meridianName):
-    i = merideans.index(meridianName)
-
-    if i <= 2:
-        if i == 1:
-            for j in range(len(AcupointsPosition[0][i]) - 1):
-                image = cv.line(
-                    image,
-                    AcupointsPosition[0][i][j],
-                    AcupointsPosition[0][i][j + 1],
-                    color=(255, 0, 3),
-                    thickness=2,
-                )
-        else:
-            for j in range((len(AcupointsPosition[0][i]) - 2) / 2):
-                image = cv.line(
-                    image,
-                    AcupointsPosition[0][i][j],
-                    AcupointsPosition[0][i][j + 1],
-                    color=(255, 0, 3),
-                    thickness=2,
-                )
-                image = cv.line(
-                    image,
-                    AcupointsPosition[0][i][j + len(AcupointsPosition[0][i])],
-                    AcupointsPosition[0][i][j + 1 + len(AcupointsPosition[0][i])],
-                    color=(255, 0, 3),
-                    thickness=2,
-                )
-    else:
-        for j in range((len(AcupointsPosition[0][i]) - 2) / 2):
-            image = cv.line(
-                image,
-                AcupointsPosition[1][i][j],
-                AcupointsPosition[1][i][j + 1],
-                color=(255, 0, 3),
-                thickness=2,
-            )
-            image = cv.line(
-                image,
-                AcupointsPosition[1][i][j + len(AcupointsPosition[1][i])],
-                AcupointsPosition[1][i][j + 1 + len(AcupointsPosition[1][i])],
-                color=(255, 0, 3),
-                thickness=2,
-            )
-
 
 if __name__ == "__main__":
     global ui
@@ -841,6 +711,7 @@ if __name__ == "__main__":
     ui.merideansBox.signa.connect(printList)
     MainWindow.show()
 
+
     first_thread = threading.Thread(target=Kinect_Capture)
     first_thread.start()
     second_thread = threading.Thread(target=MP)
@@ -852,3 +723,4 @@ if __name__ == "__main__":
     pyK4A.device_stop_cameras()
     pyK4A.device_close()
     sys.exit(app.exec_())
+
