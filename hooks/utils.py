@@ -6,7 +6,7 @@ import sys
 # 用于展示视频（图像）
 
 
-def play_video():
+def playVideo():
     dict = sys.modules['__main__'].__dict__
     dict["flag"] = True
     pyK4A = dict["pyK4A"]
