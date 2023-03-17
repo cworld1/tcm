@@ -58,30 +58,11 @@ def Kinect_Capture():
     device_config.color_resolution = _k4a.K4A_COLOR_RESOLUTION_720P
     device_config.depth_mode = _k4a.K4A_DEPTH_MODE_WFOV_2X2BINNED
 
-
     # 获取相机序列号
     serial_number = pyK4A.device_get_serialnum()
 
-
     flag = True
     play_video()
-    # while (flag):
-    #     pyK4A.device_get_capture()  # Get capture
-    #     # 获得三种数据
-    #     depth_image_handle = pyK4A.capture_get_depth_image()
-    #     color_image_handle = pyK4A.capture_get_color_image()
-    #     if depth_image_handle and color_image_handle:
-    #         # 将获取到的图像转换为numpy矩阵
-    #         image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
-    #         depth_image = pyK4A.transform_depth_to_color(
-    #             depth_image_handle, color_image_handle)
-    #         updateImage(ui, image)
-    #         k = cv.waitKey(25)
-    #
-    #     pyK4A.image_release(depth_image_handle)
-    #     pyK4A.image_release(color_image_handle)
-    #     pyK4A.capture_release()
-    #     k = cv.waitKey(25)
 
 
 # 并发线程二，在得到image和depth_image后进行检测，数据更新在LH_Landmarks, RH_Landmarks, Pose_Landmarks
@@ -480,6 +461,8 @@ if __name__ == '__main__':
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+    logoImg = cv.imread("res/logo.jpg")
+    updateImage(ui.a_logo, logoImg, 117, 67)
     ui.acupointsBox.signa.connect(printList)
     ui.merideansBox.signa.connect(printList)
     MainWindow.show()

@@ -23,7 +23,8 @@ def play_video():
             image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
             depth_image = pyK4A.transform_depth_to_color(
                 depth_image_handle, color_image_handle)
-            updateImage(dict["ui"], image)
+            # label, img, width, height
+            updateImage(dict["ui"].e_cameraImage, image,1200, 720)
             k = cv.waitKey(25)
 
         pyK4A.image_release(depth_image_handle)
