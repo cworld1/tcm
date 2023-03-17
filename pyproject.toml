@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "tcm"
-version = "0.1.0"
-description = ""
+version = "1.0.1"
+description = "An AI program that using Kinect camera and shows netural network and human skeleton."
 authors = ["cworld1 <cworld0@qq.com>"]
 readme = "README.md"
 
@@ -10,6 +10,7 @@ python = "^3.9"
 numpy = "^1.24.2"
 opencv-python = "^4.7.0.72"
 pyqt5 = "^5.15.9"
+pillow = "^9.4.0"
 
 
 [build-system]
