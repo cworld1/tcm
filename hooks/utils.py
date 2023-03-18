@@ -7,7 +7,7 @@ import sys
 
 
 def playVideo():
-    dict = sys.modules['__main__'].__dict__
+    dict = sys.modules["__main__"].__dict__
     dict["flag"] = True
     pyK4A = dict["pyK4A"]
 
@@ -22,21 +22,24 @@ def playVideo():
             # 将获取到的图像转换为numpy矩阵
             image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
             depth_image = pyK4A.transform_depth_to_color(
-                depth_image_handle, color_image_handle)
+                depth_image_handle, color_image_handle
+            )
             # label, img, width, height
-            updateImage(dict["ui"].e_cameraImage, image,1200, 720)
+            updateImage(dict["ui"].cameraImage, image, 1200, 720)
             k = cv.waitKey(25)
 
         pyK4A.image_release(depth_image_handle)
         pyK4A.image_release(color_image_handle)
         pyK4A.capture_release()
 
+
 # 暂停显示
 
 
-def pause():
-    test_dict = sys.modules['__main__'].__dict__
+def pauseVideo():
+    test_dict = sys.modules["__main__"].__dict__
     test_dict["flag"] = False
+
 
 # 更新图像
 
@@ -46,8 +49,13 @@ def updateImage(label, img, width, height):
     RGBImg = cv.cvtColor(img, cv.COLOR_BGR2RGB)
     # 将图片转化成Qt可读格式
     image = QtGui.QImage(
-        RGBImg, RGBImg.shape[1], RGBImg.shape[0], QtGui.QImage.Format_RGB888)
+        RGBImg, RGBImg.shape[1], RGBImg.shape[0], QtGui.QImage.Format_RGB888
+    )
     # 加载图片,并自定义图片展示尺寸
     image = QtGui.QPixmap(image).scaled(width, height)
     # 显示图片
     label.setPixmap(image)
+
+
+def printList(selectedList):
+    print(selectedList)
