@@ -17,109 +17,82 @@ class Ui_MainWindow(object):
         MainWindow.resize(1714, 772)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(40, 100, 421, 141))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.b_verticalLayout = QtWidgets.QVBoxLayout(
-            self.verticalLayoutWidget)
-        self.b_verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.b_verticalLayout.setObjectName("b_verticalLayout")
-        self.comboBox = QtWidgets.QComboBox(self.verticalLayoutWidget)
-        self.comboBox.setMaximumSize(QtCore.QSize(16777215, 45))
-        self.comboBox.setStyleSheet("QComboBox {\n"
-                                    "  background-color: #ffffff;\n"
-                                    "  border: 1px solid #dcdfe6;\n"
-                                    "  padding: 10px;\n"
-                                    "  border-radius: 7px;\n"
-                                    "  font: bold 17px;\n"
-                                    "}")
-        self.comboBox.setObjectName("comboBox")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.b_verticalLayout.addWidget(self.comboBox)
-        self.comboBox_2 = QtWidgets.QComboBox(self.verticalLayoutWidget)
-        self.comboBox_2.setMaximumSize(QtCore.QSize(16777215, 45))
-        self.comboBox_2.setStyleSheet("QComboBox {\n"
-                                      "  background-color: #ffffff;\n"
-                                      "  border: 1px solid #dcdfe6;\n"
-                                      "  padding: 10px;\n"
-                                      "  border-radius: 7px;\n"
-                                      "  font: bold 17px;\n"
-                                      "}")
-        self.comboBox_2.setObjectName("comboBox_2")
-        self.comboBox_2.addItem("")
-        self.comboBox_2.addItem("")
-        self.b_verticalLayout.addWidget(self.comboBox_2)
-        self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(
-            QtCore.QRect(100, 390, 281, 80))
-        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
-        self.c_horizontalLayout = QtWidgets.QHBoxLayout(
-            self.horizontalLayoutWidget)
-        self.c_horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.c_horizontalLayout.setObjectName("c_horizontalLayout")
-        self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton.setMinimumSize(QtCore.QSize(0, 40))
-        self.pushButton.setStyleSheet("QPushButton {\n"
-                                      "  background-color: #ffffff;\n"
-                                      "  border: 1px solid #dcdfe6;\n"
-                                      "  padding: 10px;\n"
-                                      "  border-radius: 7px;\n"
-                                      "  font: bold 17px;\n"
-                                      "}\n"
-                                      "\n"
-                                      "QPushButton:hover {\n"
-                                      "  background-color: #bff1d8;\n"
-                                      "  color: #066335;\n"
-                                      "}\n"
-                                      "\n"
-                                      "QPushButton:pressed,\n"
-                                      "QPushButton:checked {\n"
-                                      "  border-color: #44b17b;\n"
-                                      "  color: #066335;\n"
-                                      "}")
-        self.pushButton.setObjectName("pushButton")
-        self.c_horizontalLayout.addWidget(self.pushButton)
-        self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton_2.setMinimumSize(QtCore.QSize(0, 40))
-        self.pushButton_2.setStyleSheet("QPushButton {\n"
-                                        "  background-color: #ffffff;\n"
-                                        "  border: 1px solid #dcdfe6;\n"
-                                        "  padding: 10px;\n"
-                                        "  border-radius: 7px;\n"
-                                        "  font: bold 17px;\n"
-                                        "}\n"
-                                        "\n"
-                                        "QPushButton:hover {\n"
-                                        "  background-color: #bff1d8;\n"
-                                        "  color: #066335;\n"
-                                        "}\n"
-                                        "\n"
-                                        "QPushButton:pressed,\n"
-                                        "QPushButton:checked {\n"
-                                        "  border-color: #44b17b;\n"
-                                        "  color: #066335;\n"
-                                        "}")
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.c_horizontalLayout.addWidget(self.pushButton_2)
-        self.e_cameraImage = QtWidgets.QLabel(self.centralwidget)
-        self.e_cameraImage.setGeometry(QtCore.QRect(490, 30, 1200, 720))
-        self.e_cameraImage.setStyleSheet("background-color: rgb(221, 221, 221);\n"
-                                         "border-radius:7px;")
-        self.e_cameraImage.setObjectName("e_cameraImage")
-        self.d_deepthImage = QtWidgets.QLabel(self.centralwidget)
-        self.d_deepthImage.setGeometry(QtCore.QRect(30, 480, 431, 261))
-        self.d_deepthImage.setStyleSheet("background-color: rgb(221, 221, 221);\n"
-                                         "border-radius:7px;")
-        self.d_deepthImage.setObjectName("d_deepthImage")
-        self.a_logo = QtWidgets.QLabel(self.centralwidget)
-        self.a_logo.setGeometry(QtCore.QRect(40, 30, 117, 67))
-        self.a_logo.setStyleSheet("background-color: rgb(221, 221, 221);\n"
-                                  "border-radius:7px;")
-        self.a_logo.setObjectName("a_logo")
+        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout.setContentsMargins(20, 20, 20, 0)
+        self.gridLayout.setSpacing(20)
+        self.gridLayout.setObjectName("gridLayout")
+        self.sidebar_verticalLayout = QtWidgets.QVBoxLayout()
+        self.sidebar_verticalLayout.setContentsMargins(0, 0, 0, -1)
+        self.sidebar_verticalLayout.setObjectName("sidebar_verticalLayout")
+        self.logo = QtWidgets.QLabel(self.centralwidget)
+        self.logo.setMinimumSize(QtCore.QSize(117, 67))
+        self.logo.setMaximumSize(QtCore.QSize(117, 67))
+        self.logo.setStyleSheet("image: url(./res/logo_simple.png)")
+        self.logo.setText("")
+        self.logo.setObjectName("logo")
+        self.sidebar_verticalLayout.addWidget(self.logo)
+        self.merideansBox = QtWidgets.QComboBox(self.centralwidget)
+        self.merideansBox.setMinimumSize(QtCore.QSize(420, 45))
+        self.merideansBox.setMaximumSize(QtCore.QSize(16777215, 45))
+        self.merideansBox.setStyleSheet("ComboCheckBox {color: #ffffff;}")
+        self.merideansBox.setObjectName("merideansBox")
+        self.merideansBox.addItem("")
+        self.merideansBox.addItem("")
+        self.sidebar_verticalLayout.addWidget(self.merideansBox)
+        self.acupointsBox = QtWidgets.QComboBox(self.centralwidget)
+        self.acupointsBox.setMinimumSize(QtCore.QSize(420, 45))
+        self.acupointsBox.setMaximumSize(QtCore.QSize(16777215, 45))
+        self.acupointsBox.setStyleSheet("ComboCheckBox {color: #ffffff;}")
+        self.acupointsBox.setObjectName("acupointsBox")
+        self.acupointsBox.addItem("")
+        self.acupointsBox.addItem("")
+        self.sidebar_verticalLayout.addWidget(self.acupointsBox)
+        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit.setMinimumSize(QtCore.QSize(420, 240))
+        self.textEdit.setObjectName("textEdit")
+        self.sidebar_verticalLayout.addWidget(self.textEdit)
+        self.buttons_horizontalLayout = QtWidgets.QHBoxLayout()
+        self.buttons_horizontalLayout.setObjectName("buttons_horizontalLayout")
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.buttons_horizontalLayout.addItem(spacerItem)
+        self.play = QtWidgets.QPushButton(self.centralwidget)
+        self.play.setMinimumSize(QtCore.QSize(120, 40))
+        self.play.setMaximumSize(QtCore.QSize(16777215, 40))
+        self.play.setStyleSheet("")
+        self.play.setObjectName("play")
+        self.buttons_horizontalLayout.addWidget(self.play)
+        self.pause = QtWidgets.QPushButton(self.centralwidget)
+        self.pause.setMinimumSize(QtCore.QSize(120, 40))
+        self.pause.setMaximumSize(QtCore.QSize(16777215, 40))
+        self.pause.setStyleSheet("")
+        self.pause.setObjectName("pause")
+        self.buttons_horizontalLayout.addWidget(self.pause)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.buttons_horizontalLayout.addItem(spacerItem1)
+        self.sidebar_verticalLayout.addLayout(self.buttons_horizontalLayout)
+        self.deepthImage = QtWidgets.QLabel(self.centralwidget)
+        self.deepthImage.setMinimumSize(QtCore.QSize(420, 180))
+        self.deepthImage.setStyleSheet(
+            "background-color: #232629;\n" "border-radius:7px;"
+        )
+        self.deepthImage.setObjectName("deepthImage")
+        self.sidebar_verticalLayout.addWidget(self.deepthImage)
+        self.gridLayout.addLayout(self.sidebar_verticalLayout, 0, 0, 1, 1)
+        self.cameraImage = QtWidgets.QLabel(self.centralwidget)
+        self.cameraImage.setStyleSheet(
+            "background-color: #232629;\n" "border-radius:7px;"
+        )
+        self.cameraImage.setObjectName("cameraImage")
+        self.gridLayout.addWidget(self.cameraImage, 0, 1, 1, 1)
+        self.gridLayout.setColumnStretch(0, 1)
+        self.gridLayout.setColumnStretch(1, 3)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1714, 28))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1714, 25))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -132,19 +105,48 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.comboBox.setItemText(0, _translate("MainWindow", "1"))
-        self.comboBox.setItemText(1, _translate("MainWindow", "2"))
-        self.comboBox_2.setItemText(0, _translate("MainWindow", "1"))
-        self.comboBox_2.setItemText(1, _translate("MainWindow", "2"))
-        self.pushButton.setText(_translate("MainWindow", "播放"))
-        self.pushButton_2.setText(_translate("MainWindow", "暂停"))
-        self.e_cameraImage.setText(_translate("MainWindow", "CameraImage"))
-        self.d_deepthImage.setText(_translate("MainWindow", "DeepthImage"))
-        self.a_logo.setText(_translate("MainWindow", "Logo"))
+        self.merideansBox.setItemText(0, _translate("MainWindow", "1"))
+        self.merideansBox.setItemText(1, _translate("MainWindow", "2"))
+        self.acupointsBox.setItemText(0, _translate("MainWindow", "1"))
+        self.acupointsBox.setItemText(1, _translate("MainWindow", "2"))
+        self.textEdit.setHtml(
+            _translate(
+                "MainWindow",
+                '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">\n'
+                '<html><head><meta name="qrichtext" content="1" /><meta charset="utf-8" /><style type="text/css">\n'
+                "p, li { white-space: pre-wrap; }\n"
+                "hr { height: 1px; border-width: 0; }\n"
+                'li.unchecked::marker { content: "\\2610"; }\n'
+                'li.checked::marker { content: "\\2612"; }\n'
+                "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
+                '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p></body></html>',
+            )
+        )
+        self.play.setText(_translate("MainWindow", "播放"))
+        self.pause.setText(_translate("MainWindow", "暂停"))
+        self.deepthImage.setText(_translate("MainWindow", "DeepthImage"))
+        self.cameraImage.setText(_translate("MainWindow", "CameraImage"))
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

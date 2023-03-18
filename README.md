@@ -28,7 +28,8 @@ poetry run python ./main.py
 
 ## UI Design Scheme
 
-- Main color: `#066335`
-- Background color: `#BFF1D8`
-- Border color: `#44B17B`
+- Main color: `#1DE9B6`
+- Background color: `#31363B`
+- Deeper background color: `#232629`
+- Border color: `#515558`
 - Border radius: `7px`

@@ -7,8 +7,27 @@ import cv2 as cv
 from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
 
 # 测试数据
-Name = ["尺泽(左)", "孔最", "侠白", "天泉", "郄门", "大横", "归来", "天枢", "库房",
-        "不容", "梁门", "太乙", "大巨", "府舍", "腹结", "伏兔", "阴市", "足三里", "条口"]
+Name = [
+    "尺泽(左)",
+    "孔最",
+    "侠白",
+    "天泉",
+    "郄门",
+    "大横",
+    "归来",
+    "天枢",
+    "库房",
+    "不容",
+    "梁门",
+    "太乙",
+    "大巨",
+    "府舍",
+    "腹结",
+    "伏兔",
+    "阴市",
+    "足三里",
+    "条口",
+]
 
 
 class ComboCheckBox(QComboBox):
@@ -17,7 +36,7 @@ class ComboCheckBox(QComboBox):
     def __init__(self, items):  # items==[str,str...]
         super(ComboCheckBox, self).__init__()
         self.items = items
-        self.items.insert(0, '全部')
+        self.items.insert(0, "全部")
 
         self.row_num = len(self.items)
         self.Selectedrow_num = 0
@@ -51,13 +70,13 @@ class ComboCheckBox(QComboBox):
         return Outputlist
 
     def show0(self):
-        show0 = ''
+        show0 = ""
         Outputlist = self.Selectlist()
         self.signa.emit(Outputlist)
         self.qLineEdit.setReadOnly(False)
         self.qLineEdit.clear()
         for i in Outputlist:
-            show0 += i + ';'
+            show0 += i + ";"
         if self.Selectedrow_num == 0:
             self.qCheckBox[0].setCheckState(0)
         elif self.Selectedrow_num == self.row_num - 1:
@@ -82,9 +101,8 @@ class ComboCheckBox(QComboBox):
             self.qCheckBox[i].setChecked(False)
 
     def changeitemlist(self, itemlist):
-
         self.items = itemlist
-        self.items.insert(0, '全部')
+        self.items.insert(0, "全部")
         self.row_num = len(self.items)
         self.Selectedrow_num = 0
         self.qCheckBox = []
@@ -121,7 +139,7 @@ class ComboCheckBox(QComboBox):
 class TestWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Main')
+        self.setWindowTitle("Main")
         self.setGeometry(100, 100, 1350, 900)
 
         # 添加组件
@@ -129,12 +147,6 @@ class TestWindow(QWidget):
         vbox = QVBoxLayout()
         vbox.addWidget(self.acupointsButtons)
         self.setLayout(vbox)
-
-
-def printList(selectedList):
-    print(selectedList)
-    Find_meridians(selectedList)
-# 穴位连线
 
 
 if __name__ == "__main__":
