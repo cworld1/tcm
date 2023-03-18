@@ -11,9 +11,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from qt_material import apply_stylesheet
 
-# 用于展示视频（图像）
-import cv2 as cv
-
 # 组件导入
 from components.box import ComboCheckBox
 
@@ -189,9 +186,6 @@ if __name__ == "__main__":
     MainWindow.show()
 
     # 测试
-    # 通过cv读取图片
-    cameraImg = cv.imread("res/test.jpg")
-    # updateImage(ui.cameraImage, cameraImg, 1200, 720)
     ui.cameraImage.setStyleSheet(
         "background-image: url(res/test.jpg); background-repeat: no-repeat; background-position: center; background-attachment: fixed; background-size: 100% 100%;"
     )
