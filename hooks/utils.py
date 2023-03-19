@@ -592,7 +592,7 @@ def playVideo():
                 depth_image_handle, color_image_handle
             )
             # label, img, width, height
-            updateImage(dict["ui"].cameraImage, image, 1200, 720)
+            updateImage(dict["ui"].cameraImage, image)
             k = cv.waitKey(25)
             MP(image)
             FindAcupoints()
