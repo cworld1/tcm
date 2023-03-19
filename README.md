@@ -20,6 +20,18 @@ Install independencies:
 poetry install
 ```
 
+If you have some troubles above command, please try to reinstall the problematic package by `pip`. Exapmle:
+
+```bash
+pip install --upgrade pyqt5
+```
+
+If you still have troubles, try to install all dependencies with `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Run the code
 
 ```bash
