@@ -11,6 +11,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from qt_material import apply_stylesheet
 
+# 用于展示视频（图像）
+import cv2 as cv
+
 # 组件导入
 from components.box import ComboCheckBox
 
@@ -26,7 +29,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         # 设定主窗口
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1714, 772)
+        MainWindow.resize(1400, 750)
         # 建立主布局
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -46,6 +49,7 @@ class Ui_MainWindow(object):
         self.logo.setMaximumSize(QtCore.QSize(117, 67))
         self.logo.setStyleSheet("image: url(./res/logo_simple.png)")
         self.logo.setText("")
+        self.logo.setAlignment(QtCore.Qt.AlignCenter)
         self.logo.setObjectName("logo")
         self.sidebar_verticalLayout.addWidget(self.logo)
 
@@ -54,16 +58,18 @@ class Ui_MainWindow(object):
         self.merideansBox = ComboCheckBox(merideans)
         self.merideansBox.setMinimumSize(QtCore.QSize(420, 45))
         self.merideansBox.setMaximumSize(QtCore.QSize(16777215, 45))
-        self.merideansBox.setStyleSheet("ComboCheckBox {color: #ffffff;}")
+        self.merideansBox.setStyleSheet("ComboCheckBox { color: #ffffff }")
         self.merideansBox.setObjectName("merideansBox")
         self.sidebar_verticalLayout.addWidget(self.merideansBox)
+        self.merideansBox.signa.connect(printList)
         # ComboBox 2
         self.acupointsBox = ComboCheckBox(acupoints)
         self.acupointsBox.setMinimumSize(QtCore.QSize(420, 45))
         self.acupointsBox.setMaximumSize(QtCore.QSize(16777215, 45))
-        self.acupointsBox.setStyleSheet("ComboCheckBox {color: #ffffff;}")
+        self.acupointsBox.setStyleSheet("ComboCheckBox { color: #ffffff }")
         self.acupointsBox.setObjectName("acupointsBox")
         self.sidebar_verticalLayout.addWidget(self.acupointsBox)
+        self.acupointsBox.signa.connect(printList)
 
         # 经脉、穴位展示，使用 QTextEdit 实现
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
@@ -83,7 +89,6 @@ class Ui_MainWindow(object):
         self.play = QtWidgets.QPushButton(self.centralwidget)
         self.play.setMinimumSize(QtCore.QSize(120, 40))
         self.play.setMaximumSize(QtCore.QSize(16777215, 40))
-        self.play.setStyleSheet("")
         self.play.setObjectName("play")
         self.buttons_horizontalLayout.addWidget(self.play)
         self.play.clicked.connect(playVideo)
@@ -91,7 +96,6 @@ class Ui_MainWindow(object):
         self.pause = QtWidgets.QPushButton(self.centralwidget)
         self.pause.setMinimumSize(QtCore.QSize(120, 40))
         self.pause.setMaximumSize(QtCore.QSize(16777215, 40))
-        self.pause.setStyleSheet("")
         self.pause.setObjectName("pause")
         self.buttons_horizontalLayout.addWidget(self.pause)
         self.pause.clicked.connect(pauseVideo)
@@ -105,18 +109,17 @@ class Ui_MainWindow(object):
         # 添加深度图像放置位置
         self.deepthImage = QtWidgets.QLabel(self.centralwidget)
         self.deepthImage.setMinimumSize(QtCore.QSize(420, 180))
-        self.deepthImage.setStyleSheet(
-            "background-color: #232629;\n" "border-radius:7px;"
-        )
+        self.deepthImage.setStyleSheet("background-color: #232629; border-radius: 7px")
+        self.deepthImage.setAlignment(QtCore.Qt.AlignCenter)
         self.deepthImage.setObjectName("deepthImage")
         self.sidebar_verticalLayout.addWidget(self.deepthImage)
 
         # 展示主图像，此处需要集成 Kinect 图像注入刷新
         self.gridLayout.addLayout(self.sidebar_verticalLayout, 0, 0, 1, 1)
         self.cameraImage = QtWidgets.QLabel(self.centralwidget)
-        self.cameraImage.setStyleSheet(
-            "background-color: #232629;\n" "border-radius:7px;"
-        )
+        self.cameraImage.setStyleSheet("background-color: #232629; border-radius:7px")
+        self.cameraImage.setScaledContents(True)
+        self.cameraImage.setAlignment(QtCore.Qt.AlignCenter)
         self.cameraImage.setObjectName("cameraImage")
 
         # 主窗口
@@ -125,7 +128,7 @@ class Ui_MainWindow(object):
         self.gridLayout.setColumnStretch(1, 3)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1714, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1400, 25))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -186,10 +189,7 @@ if __name__ == "__main__":
     MainWindow.show()
 
     # 测试
-    ui.cameraImage.setStyleSheet(
-        "background-image: url(res/test.jpg); background-repeat: no-repeat; background-position: center; background-attachment: fixed; background-size: 100% 100%;"
-    )
-    ui.acupointsBox.signa.connect(printList)
-    ui.merideansBox.signa.connect(printList)
+    image = cv.imread("./res/test.jpg")
+    updateImage(ui.cameraImage, image)
 
     sys.exit(app.exec_())
