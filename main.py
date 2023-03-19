@@ -33,6 +33,10 @@ depth_image = np.ndarray((720, 1200, 3))
 LH_Landmarks = []
 RH_Landmarks = []
 Pose_Landmarks = []
+# 列表数据
+global selectedAcupoints, selectedMeridians
+selectedAcupoints = []
+selectedMeridians = []
 
 handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
@@ -46,7 +50,8 @@ poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 def Kinect_Capture():
     global image, depth_image, flag, pyK4A, device_config
     # 添加 Azure Kinect SDK 路径
-    modulePath = "C:\\Program Files\\Azure Kinect SDK v1.4.1\\sdk\\windows-desktop\\amd64\\release\\bin\\k4a.dll"
+    modulePath = "C:\\Program Files\\Azure Kinect SDK v1.4.1\\\
+sdk\\windows-desktop\\amd64\\release\\bin\\k4a.dll"
     pyK4A = pyKinectAzure(modulePath)
     pyK4A.device_open()
     device_config = pyK4A.config
@@ -55,7 +60,7 @@ def Kinect_Capture():
     device_config.depth_mode = _k4a.K4A_DEPTH_MODE_WFOV_2X2BINNED
 
     # 获取相机序列号
-    serial_number = pyK4A.device_get_serialnum()
+    # serial_number = pyK4A.device_get_serialnum()
 
     flag = True
     playVideo()
@@ -636,10 +641,7 @@ def cv2ImgAddText(img, text, left, top, textColor=(0, 255, 0), textSize=20):
 
 
 # 查询函数，输入穴位名，输出在Name中的位置下标
-
-
 def FindAcupoint(acupointName=""):
-    n = 0
     for i in range(2):
         for j in range(5):
             for k in range(len(Name[i][j])):
@@ -648,8 +650,6 @@ def FindAcupoint(acupointName=""):
 
 
 # 预测
-
-
 def Projection(u0, v0, fx, fy, u, v, z):
     pixel_coordinate = np.array([[u], [v], [1]])
     intrix_matrix = [[fx, 0, u0], [0, fy, v0], [0, 0, 1]]
@@ -660,15 +660,11 @@ def Projection(u0, v0, fx, fy, u, v, z):
 
 
 # 计算差值
-
-
 def delta(x, y, z, dx, dy, dz):
     return x - dx, y - dy, z - dz
 
 
 # 计算角度
-
-
 def pos_angle(x, y, z):
     theta_1 = math.atan2(x, z) * 180 / math.pi
     theta_2 = math.atan2(y, z) * 180 / math.pi
@@ -676,8 +672,6 @@ def pos_angle(x, y, z):
 
 
 # 上色
-
-
 def color_depth_image(depth_image):
     # 实现将原图片转换为uint8类型
     depth_color_image = cv.convertScaleAbs(depth_image, alpha=0.05)
