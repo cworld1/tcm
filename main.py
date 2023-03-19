@@ -4,32 +4,21 @@ import sys
 import threading  # 多线程
 
 # 3rd party imports
+# Qt UI imports
+from PyQt5 import QtCore, QtGui, QtWidgets
+from qt_material import apply_stylesheet
+
+# Others
 import numpy as np
 import cv2 as cv
-
-# from HandTrackingModule import HandDetector
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import (
-    QApplication,
-    QWidget,
-    QLabel,
-    QComboBox,
-    QHBoxLayout,
-    QVBoxLayout,
-    QLineEdit,
-    QListWidget,
-    QCheckBox,
-    QListWidgetItem,
-)
-from PyQt5.QtGui import QPixmap, QImage
-from PyQt5.QtCore import Qt, QTimer
 from PIL import Image, ImageDraw, ImageFont
-from PoseModule import PoseDetector
 
 # Local imports
 from gui import Ui_MainWindow, printList
 from hooks.utils import updateImage, playVideo
 from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
+from HandTrackingModule import HandDetector
+from PoseModule import PoseDetector
 
 # 添加 Azure Kinect SDK 路径
 sys.path.insert(1, "./pyKinectAzure/")
@@ -48,12 +37,8 @@ handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 
 
-
-
 # 一个UI希望集成上述函数，有一个720*1200的视频显示区域，有两个下拉式复选框组件，一个是穴位acupoints，另一个是经脉meridians，
 # 其本身应该有众多共享的变量
-
-
 
 
 # 并发线程一，调用深度摄像头并获得image和depth_image
@@ -74,7 +59,9 @@ def Kinect_Capture():
     flag = True
     playVideo()
 
+
 # 并发线程二，在得到image和depth_image后进行检测，数据更新在LH_Landmarks, RH_Landmarks, Pose_Landmarks
+
 
 def MP():
     global LH_Landmarks, RH_Landmarks, Pose_Landmarks
@@ -83,7 +70,6 @@ def MP():
     Hands, img = handDetector.findHands(image, draw=False)
     img = poseDetector.findPose(img, draw=False)
     Poselist, bboxInfo = poseDetector.findPosition(img, draw=False)
-
 
     if Hands:
         hand0 = Hands[0]
@@ -699,19 +685,19 @@ def color_depth_image(depth_image):
 
     return depth_color_image
 
+
 if __name__ == "__main__":
     global ui
     app = QtWidgets.QApplication(sys.argv)
+    apply_stylesheet(
+        app, theme="dark_teal.xml", extra={"font_family": "Roboto"}
+    )  # 主题样式
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-    logoImg = cv.imread("res/logo.jpg")
-    updateImage(ui.a_logo, logoImg, 117, 67)
-    ui.acupointsBox.signa.connect(printList)
-    ui.merideansBox.signa.connect(printList)
     MainWindow.show()
 
-
+    # 线程开启
     first_thread = threading.Thread(target=Kinect_Capture)
     first_thread.start()
     second_thread = threading.Thread(target=MP)
@@ -723,4 +709,3 @@ if __name__ == "__main__":
     pyK4A.device_stop_cameras()
     pyK4A.device_close()
     sys.exit(app.exec_())
-
