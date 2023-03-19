@@ -6,7 +6,7 @@ from store.data import merideans, acupoints, Name, AcupointIsShow, sampleAcupoin
 
 def Find_meridians(meridianName):
     i = merideans.index(meridianName)
-    image = cv.imread("../res/logo.jpg")
+    image = cv.imread("../res/logo.png")
     AcupointsPosition = sampleAcupoints
     if i <= 2:
         if i == 1:

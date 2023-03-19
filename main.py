@@ -5,7 +5,7 @@ import threading  # 多线程
 
 # 3rd party imports
 # Qt UI imports
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets
 from qt_material import apply_stylesheet
 
 # Others
@@ -14,15 +14,16 @@ import cv2 as cv
 from PIL import Image, ImageDraw, ImageFont
 
 # Local imports
-from gui import Ui_MainWindow, printList
-from hooks.utils import updateImage, playVideo
-from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
-from HandTrackingModule import HandDetector
-from PoseModule import PoseDetector
+from gui import Ui_MainWindow
+from hooks.utils import playVideo
+from store.data import Name, AcupointsPosition
+from hooks.HandTrackingModule import HandDetector
+from hooks.PoseModule import PoseDetector
 
 # 添加 Azure Kinect SDK 路径
 sys.path.insert(1, "./pyKinectAzure/")
 from pyKinectAzure import pyKinectAzure, _k4a
+
 
 image = np.ndarray((720, 1200, 3))
 
@@ -702,6 +703,7 @@ if __name__ == "__main__":
     first_thread.start()
     second_thread = threading.Thread(target=MP)
     second_thread.start()
+
 
     third_thread = threading.Thread(target=FindAcupoints)
     third_thread.start()

@@ -1,13 +1,11 @@
 import math
-import serial
-import time
 import cv2 as cv
 import numpy as np
-from PoseModule import PoseDetector
-from HandTrackingModule import HandDetector
+from hooks.PoseModule import PoseDetector
+from hooks.HandTrackingModule import HandDetector
 from PIL import Image, ImageDraw, ImageFont
 import sys
-sys.path.insert(1, './pyKinectAzure/')
+sys.path.insert(1, '../pyKinectAzure/')
 from pyKinectAzure import pyKinectAzure, _k4a
 
 

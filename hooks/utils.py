@@ -1,12 +1,12 @@
 from PyQt5 import QtGui
-from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
+from store.data import AcupointsPosition
 
 import cv2 as cv
 import sys
 
 # 用于展示视频（图像）
-from HandTrackingModule import HandDetector
-from PoseModule import PoseDetector
+from hooks.HandTrackingModule import HandDetector
+from hooks.PoseModule import PoseDetector
 
 handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
@@ -592,7 +592,8 @@ def playVideo():
                 depth_image_handle, color_image_handle
             )
             # label, img, width, height
-            updateImage(dict["ui"].cameraImage, image)
+            updateImage(dict["ui"].cameraImage, depth_image)
+            updateImage(dict["ui"].deepthImage, image)
             k = cv.waitKey(25)
             MP(image)
             FindAcupoints()
