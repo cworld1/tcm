@@ -40,8 +40,12 @@ poetry run python ./main.py
 
 ## UI Design Scheme
 
-- Main color: `#1DE9B6`
-- Background color: `#31363B`
-- Deeper background color: `#232629`
-- Border color: `#515558`
-- Border radius: `7px`
+| Name                    | Value                        |
+| ----------------------- | ---------------------------- |
+| Logo                    | ![logo](./res/logo_mini.png) |
+| Main color              | #1DE9B6                      |
+| Background color        | #31363B                      |
+| Deeper background color | #232629                      |
+| Border color            | #515558                      |
+| Border radius           | 7px                          |
+| Font                    | Roboto                       |
