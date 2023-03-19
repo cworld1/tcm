@@ -1,34 +1,10 @@
 import sys
-from PyQt5.QtCore import QTimer, Qt, pyqtSignal
+from PyQt5.QtCore import QTimer, pyqtSignal
 from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import QApplication, QWidget, QComboBox, QVBoxLayout, QLabel, QLineEdit, QListWidget, QCheckBox, \
+from PyQt5.QtWidgets import QApplication, QWidget, QComboBox, QVBoxLayout, QLineEdit, QListWidget, QCheckBox, \
     QListWidgetItem
 import cv2 as cv
-from store.data import merideans, acupoints, Name, AcupointsPosition, AcupointIsShow
-
-# 测试数据
-Name = [
-    "尺泽(左)",
-    "孔最",
-    "侠白",
-    "天泉",
-    "郄门",
-    "大横",
-    "归来",
-    "天枢",
-    "库房",
-    "不容",
-    "梁门",
-    "太乙",
-    "大巨",
-    "府舍",
-    "腹结",
-    "伏兔",
-    "阴市",
-    "足三里",
-    "条口",
-]
-
+from store.data import Name
 
 class ComboCheckBox(QComboBox):
     signa = pyqtSignal(list)
@@ -152,7 +128,6 @@ class TestWindow(QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = TestWindow()
-    window.acupointsButtons.signa.connect(printList)
     window.show()
 
     sys.exit(app.exec_())
