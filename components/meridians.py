@@ -1,12 +1,12 @@
 # cv库
 import cv2 as cv
 
-from store.data import merideans, acupoints, Name, AcupointIsShow, sampleAcupoints
+from store.data import meridians, acupoints, Name, AcupointIsShow, sampleAcupoints
 
 
 def Find_meridians(meridianName):
-    i = merideans.index(meridianName)
-    image = cv.imread("../res/logo.png")
+    i = meridians.index(meridianName)
+    # image = cv.imread("../res/logo.jpg")
     AcupointsPosition = sampleAcupoints
     if i <= 2:
         if i == 1:

@@ -591,10 +591,11 @@ def playVideo():
             depth_image = pyK4A.transform_depth_to_color(
                 depth_image_handle, color_image_handle
             )
-            # label, img, width, height
+            # label, img
             updateImage(dict["ui"].cameraImage, depth_image)
             updateImage(dict["ui"].deepthImage, image)
-            k = cv.waitKey(25)
+            # 等待25ms
+            cv.waitKey(25)
             MP(image)
             FindAcupoints()
             print(AcupointsPosition)
@@ -621,6 +622,29 @@ def updateImage(label, image):
     # 显示图片
     label.setPixmap(QtGui.QPixmap(qimage))
 
-# 打印选中项列表
-def printList(selectedList):
+
+# 更新选中项列表
+def updateMeridiansList(selectedList):
     print(selectedList)
+    dict = sys.modules["__main__"].__dict__
+    dict["selectedMeridians"] = selectedList
+    text = (
+        "Meridians: "
+        + ", ".join(selectedList)
+        + "\n==========\nAcupoints: "
+        + ", ".join(dict["selectedAcupoints"])
+    )
+    dict["ui"].textEdit.setPlainText(text)
+
+
+def updateAcupointsList(selectedList):
+    print(selectedList)
+    dict = sys.modules["__main__"].__dict__
+    dict["selectedAcupoints"] = selectedList
+    text = (
+        "Meridians: "
+        + ", ".join(dict["selectedMeridians"])
+        + "\n==========\nAcupoints: "
+        + ", ".join(selectedList)
+    )
+    dict["ui"].textEdit.setPlainText(text)

@@ -15,6 +15,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1400, 750)
+        MainWindow.setStyleSheet("font-size: 16px; font-family: 'Microsoft YaHei UI'")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -32,14 +33,14 @@ class Ui_MainWindow(object):
         self.logo.setAlignment(QtCore.Qt.AlignCenter)
         self.logo.setObjectName("logo")
         self.sidebar_verticalLayout.addWidget(self.logo)
-        self.merideansBox = QtWidgets.QComboBox(self.centralwidget)
-        self.merideansBox.setMinimumSize(QtCore.QSize(420, 45))
-        self.merideansBox.setMaximumSize(QtCore.QSize(16777215, 45))
-        self.merideansBox.setStyleSheet("ComboCheckBox { color: #ffffff }")
-        self.merideansBox.setObjectName("merideansBox")
-        self.merideansBox.addItem("")
-        self.merideansBox.addItem("")
-        self.sidebar_verticalLayout.addWidget(self.merideansBox)
+        self.meridiansBox = QtWidgets.QComboBox(self.centralwidget)
+        self.meridiansBox.setMinimumSize(QtCore.QSize(420, 45))
+        self.meridiansBox.setMaximumSize(QtCore.QSize(16777215, 45))
+        self.meridiansBox.setStyleSheet("ComboCheckBox { color: #ffffff }")
+        self.meridiansBox.setObjectName("meridiansBox")
+        self.meridiansBox.addItem("")
+        self.meridiansBox.addItem("")
+        self.sidebar_verticalLayout.addWidget(self.meridiansBox)
         self.acupointsBox = QtWidgets.QComboBox(self.centralwidget)
         self.acupointsBox.setMinimumSize(QtCore.QSize(420, 45))
         self.acupointsBox.setMaximumSize(QtCore.QSize(16777215, 45))
@@ -50,6 +51,7 @@ class Ui_MainWindow(object):
         self.sidebar_verticalLayout.addWidget(self.acupointsBox)
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit.setMinimumSize(QtCore.QSize(420, 240))
+        self.textEdit.setHtml("")
         self.textEdit.setObjectName("textEdit")
         self.sidebar_verticalLayout.addWidget(self.textEdit)
         self.buttons_horizontalLayout = QtWidgets.QHBoxLayout()
@@ -102,40 +104,11 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.merideansBox.setItemText(0, _translate("MainWindow", "1"))
-        self.merideansBox.setItemText(1, _translate("MainWindow", "2"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "TCM"))
+        self.meridiansBox.setItemText(0, _translate("MainWindow", "1"))
+        self.meridiansBox.setItemText(1, _translate("MainWindow", "2"))
         self.acupointsBox.setItemText(0, _translate("MainWindow", "1"))
         self.acupointsBox.setItemText(1, _translate("MainWindow", "2"))
-        self.textEdit.setHtml(
-            _translate(
-                "MainWindow",
-                '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">\n'
-                '<html><head><meta name="qrichtext" content="1" /><meta charset="utf-8" /><style type="text/css">\n'
-                "p, li { white-space: pre-wrap; }\n"
-                "hr { height: 1px; border-width: 0; }\n"
-                'li.unchecked::marker { content: "\\2610"; }\n'
-                'li.checked::marker { content: "\\2612"; }\n'
-                "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">TextLabel</p>\n'
-                '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p></body></html>',
-            )
-        )
         self.play.setText(_translate("MainWindow", "播放"))
         self.pause.setText(_translate("MainWindow", "暂停"))
         self.deepthImage.setText(_translate("MainWindow", "DeepthImage"))
