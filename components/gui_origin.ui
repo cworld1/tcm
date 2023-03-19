@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1714</width>
-    <height>772</height>
+    <width>1400</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -61,6 +61,9 @@
         <property name="text">
          <string/>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item>
@@ -78,7 +81,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">ComboCheckBox {color: #ffffff;}</string>
+         <string notr="true">ComboCheckBox { color: #ffffff }</string>
         </property>
         <item>
          <property name="text">
@@ -107,7 +110,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">ComboCheckBox {color: #ffffff;}</string>
+         <string notr="true">ComboCheckBox { color: #ffffff }</string>
         </property>
         <item>
          <property name="text">
@@ -186,9 +189,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
             <height>40</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
           <property name="text">
            <string>播放</string>
           </property>
@@ -207,9 +207,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
             <width>16777215</width>
             <height>40</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
           </property>
           <property name="text">
            <string>暂停</string>
@@ -240,11 +237,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: #232629;
-border-radius:7px;</string>
+         <string notr="true">background-color: #232629; border-radius: 7px</string>
         </property>
         <property name="text">
          <string>DeepthImage</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -253,11 +252,16 @@ border-radius:7px;</string>
     <item row="0" column="1">
      <widget class="QLabel" name="cameraImage">
       <property name="styleSheet">
-       <string notr="true">background-color: #232629;
-border-radius:7px;</string>
+       <string notr="true">background-color: #232629; border-radius:7px</string>
       </property>
       <property name="text">
        <string>CameraImage</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -268,7 +272,7 @@ border-radius:7px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1714</width>
+     <width>1400</width>
      <height>25</height>
     </rect>
    </property>
