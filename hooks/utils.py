@@ -8,6 +8,7 @@ import sys
 from hooks.HandTrackingModule import HandDetector
 from hooks.PoseModule import PoseDetector
 from hooks.showMeridians import findMeridians
+from hooks.findAcupoints import showAcupointsCircle
 handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 LH_Landmarks = []
@@ -40,13 +41,9 @@ def MP(image):
 
     if Poselist:
         Pose_Landmarks = Poselist
-    # print("Pose_Landmarks", Pose_Landmarks)
-    # print("LH_Landmarks", LH_Landmarks)
-    # print("RH_Landmarks", RH_Landmarks)
 
 
 def FindAcupoints():
-    global LH_Landmarks, RH_Landmarks, Pose_Landmarks
     if Pose_Landmarks:
         cx0, cy0 = Pose_Landmarks[0][1], Pose_Landmarks[0][2]
         cx1, cy1 = Pose_Landmarks[1][1], Pose_Landmarks[1][2]
@@ -572,7 +569,6 @@ def FindAcupoints():
                 )
                 AcupointsPosition[1][1][41] = (int(cx28), int(cy28))
 
-
 def playVideo():
     dict = sys.modules["__main__"].__dict__
     dict["flag"] = True
@@ -601,8 +597,12 @@ def playVideo():
             selectedMeridians = dict["selectedMeridians"]
             for name in selectedMeridians:
                 image = findMeridians(name, AcupointsPosition, image)
+            # print(AcupointsPosition)
+            selectedAcupoints = dict["selectedAcupoints"]
+            for nameAcupoint in selectedAcupoints:
+                print(nameAcupoint)
+                image = showAcupointsCircle(image, nameAcupoint)
 
-            print(AcupointsPosition)
             # label, img
             updateImage(dict["ui"].deepthImage, depth_image)
             updateImage(dict["ui"].cameraImage, image)
@@ -646,7 +646,7 @@ def updateMeridiansList(selectedList):
 
 
 def updateAcupointsList(selectedList):
-    print(selectedList)
+    # print(selectedList)
     dict = sys.modules["__main__"].__dict__
     dict["selectedAcupoints"] = selectedList
     text = (

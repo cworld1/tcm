@@ -10,7 +10,7 @@ from qt_material import apply_stylesheet
 # Others
 import numpy as np
 import cv2 as cv
-from PIL import Image, ImageDraw, ImageFont
+
 from hooks.utils import FindAcupoints
 # Local imports
 from gui import Ui_MainWindow
@@ -96,27 +96,10 @@ def MP():
 # 并发线程三，在更新LH_Landmarks, RH_Landmarks, Pose_Landmarks后进行计算，数据更新在AcupointsPosition
 # 从hooks.findAcupoints 导入
 # 图像上画穴位点
-def cv2ImgAddText(img, text, left, top, textColor=(0, 255, 0), textSize=20):
-    if isinstance(img, np.ndarray):  # 判断是否OpenCV图片类型
-        img = Image.fromarray(cv.cvtColor(img, cv.COLOR_BGR2RGB))
-    # 创建一个可以在给定图像上绘图的对象
-    draw = ImageDraw.Draw(img)
-    # 字体的格式
-    fontStyle = ImageFont.truetype("simsun.ttc", textSize, encoding="utf-8")
-    # 绘制文本
-    draw.text((left, top), text, textColor, font=fontStyle)
-    # 转换回OpenCV格式
-    return cv.cvtColor(np.asarray(img), cv.COLOR_RGB2BGR)
+
 
 
 # 查询函数，输入穴位名，输出在Name中的位置下标
-def FindAcupoint(acupointName=""):
-    for i in range(2):
-        for j in range(5):
-            for k in range(len(Name[i][j])):
-                if Name[i][j][k] == acupointName:
-                    return i, j, k
-
 
 # 预测
 def Projection(u0, v0, fx, fy, u, v, z):
