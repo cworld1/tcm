@@ -168,7 +168,9 @@ if __name__ == "__main__":
     selectedMeridians = []
 
     app = QtWidgets.QApplication(sys.argv)
-    apply_stylesheet(app, theme="dark_teal.xml", extra={"font_family": "Roboto"})
+    apply_stylesheet(
+        app, theme="dark_teal.xml", extra={"font_family": "Microsoft YaHei UI"}
+    )
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
