@@ -1,52 +1,12 @@
-from PyQt5 import QtGui
-from store.data import AcupointsPosition
-
-import cv2 as cv
-import sys
-
-# 用于展示视频（图像）
-from hooks.HandTrackingModule import HandDetector
-from hooks.PoseModule import PoseDetector
-from components.showMeridians import findMeridians
-handDetector = HandDetector(detectionCon=0.9, maxHands=2)
-poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
+# 各种标记
 LH_Landmarks = []
 RH_Landmarks = []
 Pose_Landmarks = []
-
-
-def MP(image):
-    global LH_Landmarks, RH_Landmarks, Pose_Landmarks
-    # cap = cv.VideoCapture(0)
-    # success, image = cap.read()
-    Hands, img = handDetector.findHands(image, draw=False)
-    img = poseDetector.findPose(img, draw=False)
-    Poselist, bboxInfo = poseDetector.findPosition(img, draw=False)
-
-    if Hands:
-        hand0 = Hands[0]
-
-        if hand0["type"] == "Left":
-            LH_Landmarks = hand0["lmList"]
-        else:
-            RH_Landmarks = hand0["lmList"]
-
-        if len(Hands) > 1:
-            hand1 = Hands[1]
-            if hand1["type"] == "Left":
-                LH_Landmarks = hand1["lmList"]
-            else:
-                RH_Landmarks = hand1["lmList"]
-
-    if Poselist:
-        Pose_Landmarks = Poselist
-    # print("Pose_Landmarks", Pose_Landmarks)
-    # print("LH_Landmarks", LH_Landmarks)
-    # print("RH_Landmarks", RH_Landmarks)
-
+# 列表数据
+global selectedAcupoints, selectedMeridians
+from store.data import AcupointsPosition
 
 def FindAcupoints():
-    global LH_Landmarks, RH_Landmarks, Pose_Landmarks
     if Pose_Landmarks:
         cx0, cy0 = Pose_Landmarks[0][1], Pose_Landmarks[0][2]
         cx1, cy1 = Pose_Landmarks[1][1], Pose_Landmarks[1][2]
@@ -572,86 +532,3 @@ def FindAcupoints():
                 )
                 AcupointsPosition[1][1][41] = (int(cx28), int(cy28))
 
-
-def playVideo():
-    dict = sys.modules["__main__"].__dict__
-    dict["flag"] = True
-    pyK4A = dict["pyK4A"]
-
-    # 打开摄像头
-    pyK4A.device_start_cameras(dict["device_config"])
-    while dict["flag"]:
-
-        pyK4A.device_get_capture()  # Get capture
-        # 获得三种数据
-        depth_image_handle = pyK4A.capture_get_depth_image()
-        color_image_handle = pyK4A.capture_get_color_image()
-        if depth_image_handle and color_image_handle:
-            # 将获取到的图像转换为numpy矩阵
-            image = pyK4A.image_convert_to_numpy(color_image_handle)[:, :, :3]
-            depth_image = pyK4A.transform_depth_to_color(
-                depth_image_handle, color_image_handle
-            )
-
-
-            # 等待25ms
-            cv.waitKey(25)
-            MP(image)
-            FindAcupoints()
-            selectedMeridians = dict["selectedMeridians"]
-            for name in selectedMeridians:
-                image = findMeridians(name, AcupointsPosition, image)
-            print(AcupointsPosition)
-            # label, img
-            updateImage(dict["ui"].deepthImage, depth_image)
-            updateImage(dict["ui"].cameraImage, image)
-
-        pyK4A.image_release(depth_image_handle)
-        pyK4A.image_release(color_image_handle)
-        pyK4A.capture_release()
-
-
-# 暂停显示
-def pauseVideo():
-    test_dict = sys.modules["__main__"].__dict__
-    test_dict["flag"] = False
-
-
-# 更新图像
-def updateImage(label, image):
-    # 通道转化
-    RGBImg = cv.cvtColor(image, cv.COLOR_BGR2RGB)
-    # 将图片转化成Qt可读格式
-    qimage = QtGui.QImage(
-        RGBImg, RGBImg.shape[1], RGBImg.shape[0], QtGui.QImage.Format_RGB888
-    )
-
-    # 显示图片
-    label.setPixmap(QtGui.QPixmap(qimage))
-
-
-# 更新选中项列表
-def updateMeridiansList(selectedList):
-    print(selectedList)
-    dict = sys.modules["__main__"].__dict__
-    dict["selectedMeridians"] = selectedList
-    text = (
-        "Meridians: "
-        + ", ".join(selectedList)
-        + "\n==========\nAcupoints: "
-        + ", ".join(dict["selectedAcupoints"])
-    )
-    dict["ui"].textEdit.setPlainText(text)
-
-
-def updateAcupointsList(selectedList):
-    print(selectedList)
-    dict = sys.modules["__main__"].__dict__
-    dict["selectedAcupoints"] = selectedList
-    text = (
-        "Meridians: "
-        + ", ".join(dict["selectedMeridians"])
-        + "\n==========\nAcupoints: "
-        + ", ".join(selectedList)
-    )
-    dict["ui"].textEdit.setPlainText(text)

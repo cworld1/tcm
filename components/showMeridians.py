@@ -1,13 +1,13 @@
 # cv库
 import cv2 as cv
 
-from store.data import meridians, acupoints, Name, AcupointIsShow, sampleAcupoints
+from store.data import meridians
 
 
-def Find_meridians(meridianName):
-    i = meridians.index(meridianName)
-    # image = cv.imread("../res/logo.jpg")
-    AcupointsPosition = sampleAcupoints
+def findMeridians(meridianName, AcupointsPosition, img):
+    i = meridians.index(meridianName) - 1
+    # image = cv.imread("../res/logo.png")
+    image = img.copy()
     if i <= 2:
         if i == 1:
             for j in range(len(AcupointsPosition[0][i]) - 1):
@@ -50,9 +50,9 @@ def Find_meridians(meridianName):
                 color=(255, 0, 3),
                 thickness=2,
             )
+    return image
+    # cv.imshow("image", image)
+    # cv.waitKey(10000)
 
-    cv.imshow("image", image)
-    cv.waitKey(10000)
 
-
-Find_meridians("任脉穴")
+# findMeridians("任脉穴")
