@@ -7,7 +7,7 @@ import sys
 # 用于展示视频（图像）
 from hooks.HandTrackingModule import HandDetector
 from hooks.PoseModule import PoseDetector
-from components.showMeridians import findMeridians
+from hooks.showMeridians import findMeridians
 handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 LH_Landmarks = []
@@ -601,6 +601,7 @@ def playVideo():
             selectedMeridians = dict["selectedMeridians"]
             for name in selectedMeridians:
                 image = findMeridians(name, AcupointsPosition, image)
+
             print(AcupointsPosition)
             # label, img
             updateImage(dict["ui"].deepthImage, depth_image)
