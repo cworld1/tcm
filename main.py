@@ -66,8 +66,6 @@ sdk\\windows-desktop\\amd64\\release\\bin\\k4a.dll"
 
 
 # 并发线程二，在得到image和depth_image后进行检测，数据更新在LH_Landmarks, RH_Landmarks, Pose_Landmarks
-
-
 def MP():
     global LH_Landmarks, RH_Landmarks, Pose_Landmarks
     # cap = cv.VideoCapture(0)
@@ -98,8 +96,6 @@ def MP():
 # 并发线程三，在更新LH_Landmarks, RH_Landmarks, Pose_Landmarks后进行计算，数据更新在AcupointsPosition
 # 从hooks.findAcupoints 导入
 # 图像上画穴位点
-
-
 def cv2ImgAddText(img, text, left, top, textColor=(0, 255, 0), textSize=20):
     if isinstance(img, np.ndarray):  # 判断是否OpenCV图片类型
         img = Image.fromarray(cv.cvtColor(img, cv.COLOR_BGR2RGB))
@@ -158,7 +154,7 @@ if __name__ == "__main__":
     global ui
     app = QtWidgets.QApplication(sys.argv)
     apply_stylesheet(
-        app, theme="dark_teal.xml", extra={"font_family": "Roboto"}
+        app, theme="dark_teal.xml", extra={"font_family": "Microsoft YaHei UI"}
     )  # 主题样式
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
@@ -170,7 +166,6 @@ if __name__ == "__main__":
     first_thread.start()
     second_thread = threading.Thread(target=MP)
     second_thread.start()
-
 
     third_thread = threading.Thread(target=FindAcupoints)
     third_thread.start()
