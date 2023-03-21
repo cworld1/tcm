@@ -74,6 +74,7 @@ def MP():
     img = poseDetector.findPose(img, draw=False)
     Poselist, bboxInfo = poseDetector.findPosition(img, draw=False)
 
+
     if Hands:
         hand0 = Hands[0]
 

@@ -8,7 +8,7 @@ import sys
 from hooks.HandTrackingModule import HandDetector
 from hooks.PoseModule import PoseDetector
 from hooks.showMeridians import findMeridians
-from hooks.findAcupoints import showAcupointsCircle
+from hooks.findAcupoints import showAcupointsCircle, showAcupointsText
 handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 LH_Landmarks = []
@@ -600,9 +600,14 @@ def playVideo():
             # print(AcupointsPosition)
             selectedAcupoints = dict["selectedAcupoints"]
             for nameAcupoint in selectedAcupoints:
-                print(nameAcupoint)
-                image = showAcupointsCircle(image, nameAcupoint)
+                # print(nameAcupoint)
+                # 展示图片
+                image, position  = showAcupointsCircle(image, nameAcupoint)
 
+                image = showAcupointsText(image, nameAcupoint, position)
+                # cv2.imshow('capture', frame)
+                # if cv2.waitKey(1) & 0xFF == ord('q'):
+                #     break
             # label, img
             updateImage(dict["ui"].deepthImage, depth_image)
             updateImage(dict["ui"].cameraImage, image)

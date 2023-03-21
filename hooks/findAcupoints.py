@@ -19,26 +19,23 @@ def getPosition(acupointName=""):
                     return i, j, k
 
 
-def showAcupointsCircle(img, text, textColor=(0, 255, 0), textSize=20):
+def showAcupointsCircle(img, text, textColor=(60,179,113), textSize=20):
     i, j, k = getPosition(text)
     image = img.copy()
-    cv.circle(image, AcupointsPosition[i][j][k], 7, (255, 0, 255), -1)
+    cv.circle(image, AcupointsPosition[i][j][k], 7, textColor, -1)
+    return image, AcupointsPosition[i][j][k]
 
-    # 创建一个可以在给定图像上绘图的对象
-    draw = ImageDraw.Draw(Image.fromarray(np.uint8(image)))
-    # # 字体的格式
-    fontStyle = ImageFont.truetype("simsun.ttc", textSize, encoding="utf-8")
 
-    # # 绘制文本
-    draw.text(AcupointsPosition[i][j][k], text, textColor, font=fontStyle)
-    # 转换回OpenCV格式
-
-    if isinstance(img, np.ndarray):  # 判断是否OpenCV图片类型
-        print(1)
+def showAcupointsText(img, text, position,textColor="#1DE9B6", textSize=20 ):
+    if (isinstance(img, np.ndarray)):  # 判断是否OpenCV图片类型
         img = Image.fromarray(cv.cvtColor(img, cv.COLOR_BGR2RGB))
-        #cv.cvtColor(np.asarray(img), cv.COLOR_RGB2BGR)
-    return image
+        # 创建一个可以在给定图像上绘图的对象
+    draw = ImageDraw.Draw(img)
+    # 字体的格式
+    fontStyle = ImageFont.truetype(
+        "simsun.ttc", textSize, encoding="utf-8")
+    # 绘制文本
+    draw.text(position, text, textColor, font=fontStyle)
+    # 转换回OpenCV格式
+    return cv.cvtColor(np.asarray(img), cv.COLOR_RGB2BGR)
 
-
-# def handerShowCir(img, text):
-#     image =  showAcupointsCircle(img, text, textColor=(0, 255, 0), textSize=20)
