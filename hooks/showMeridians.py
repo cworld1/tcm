@@ -19,7 +19,7 @@ def findMeridians(meridianName, AcupointsPosition, image):
                     thickness=2,
                 )
         else:
-            for j in range((len(AcupointsPosition[0][i])) / 2 - 1):
+            for j in range(int((len(AcupointsPosition[0][i])) / 2) - 1):
                 image = cv.line(
                     image,
                     AcupointsPosition[0][i][j],
@@ -29,13 +29,13 @@ def findMeridians(meridianName, AcupointsPosition, image):
                 )
                 image = cv.line(
                     image,
-                    AcupointsPosition[0][i][j + (len(AcupointsPosition[0][i])) / 2],
-                    AcupointsPosition[0][i][j + 1 + (len(AcupointsPosition[0][i])) / 2],
+                    AcupointsPosition[0][i][j + int((len(AcupointsPosition[0][i])) / 2)],
+                    AcupointsPosition[0][i][j + 1 + int((len(AcupointsPosition[0][i])) / 2)],
                     color=(255, 0, 3),
                     thickness=2,
                 )
     else:
-        for j in range((len(AcupointsPosition[0][i - 3]) - 2) / 2):
+        for j in range(int((len(AcupointsPosition[0][i - 3]) - 2) / 2)):
             image = cv.line(
                 image,
                 AcupointsPosition[1][i - 3][j],
@@ -45,8 +45,8 @@ def findMeridians(meridianName, AcupointsPosition, image):
             )
             image = cv.line(
                 image,
-                AcupointsPosition[1][i - 3][j + (len(AcupointsPosition[1][i - 3])) / 2],
-                AcupointsPosition[1][i - 3][j + 1 + (len(AcupointsPosition[1][i - 3])) / 2],
+                AcupointsPosition[1][i - 3][j + int((len(AcupointsPosition[1][i - 3])) / 2)],
+                AcupointsPosition[1][i - 3][j + 1 + int((len(AcupointsPosition[1][i - 3])) / 2)],
                 color=(255, 0, 3),
                 thickness=2,
             )
