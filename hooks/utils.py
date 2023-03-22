@@ -624,16 +624,24 @@ def pauseVideo():
 
 
 # 更新图像
-def updateImage(label, image):
-    # 通道转化
-    RGBImg = cv.cvtColor(image, cv.COLOR_BGR2RGB)
-    # 将图片转化成Qt可读格式
-    qimage = QtGui.QImage(
-        RGBImg, RGBImg.shape[1], RGBImg.shape[0], QtGui.QImage.Format_RGB888
-    )
+def updateImage(label, image, type=1):
+    try:
+        # 通道转化
+        RGBImg = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+        # 将图片转化成Qt可读格式
+        qimage = QtGui.QImage(
+            RGBImg, RGBImg.shape[1], RGBImg.shape[0], QtGui.QImage.Format_RGB888
+        )
+        if type == 1:
+            image = QtGui.QPixmap(qimage).scaled(1200, 720)
+        else:
+            image = QtGui.QPixmap(qimage).scaled(420, 252)
 
-    # 显示图片
-    label.setPixmap(QtGui.QPixmap(qimage))
+        # 显示图片
+        # label.setPixmap(QtGui.QPixmap(qimage))
+        label.setPixmap(image)
+    except Exception as e:
+        print('updateImage', e)
 
 
 # 更新选中项列表
@@ -641,23 +649,20 @@ def updateMeridiansList(selectedList):
     print(selectedList)
     dict = sys.modules["__main__"].__dict__
     dict["selectedMeridians"] = selectedList
-    text = (
-        "Meridians: "
-        + ", ".join(selectedList)
-        + "\n==========\nAcupoints: "
-        + ", ".join(dict["selectedAcupoints"])
-    )
-    dict["ui"].textEdit.setPlainText(text)
-
+    updateText()
 
 def updateAcupointsList(selectedList):
-    # print(selectedList)
+    print(selectedList)
     dict = sys.modules["__main__"].__dict__
     dict["selectedAcupoints"] = selectedList
+    updateText()
+
+def updateText():
+    dict = sys.modules["__main__"].__dict__
     text = (
-        "Meridians: "
+        "经脉："
         + ", ".join(dict["selectedMeridians"])
-        + "\n==========\nAcupoints: "
-        + ", ".join(selectedList)
+        + "\n==============================\n穴位："
+        + ", ".join(dict["selectedAcupoints"])
     )
     dict["ui"].textEdit.setPlainText(text)
