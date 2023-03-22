@@ -52,6 +52,9 @@ class Ui_MainWindow(object):
         self.sidebar_verticalLayout.setContentsMargins(0, 0, 0, -1)
         self.sidebar_verticalLayout.setObjectName("sidebar_verticalLayout")
 
+        # Logo、转置复选框
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         # Logo，使用 QLabel 实现
         self.logo = QtWidgets.QLabel(self.centralwidget)
         self.logo.setMinimumSize(QtCore.QSize(117, 67))
@@ -60,7 +63,17 @@ class Ui_MainWindow(object):
         self.logo.setText("")
         self.logo.setAlignment(QtCore.Qt.AlignCenter)
         self.logo.setObjectName("logo")
-        self.sidebar_verticalLayout.addWidget(self.logo)
+        self.horizontalLayout_2.addWidget(self.logo)
+        # 用于占位的空白弹性控件
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.horizontalLayout_2.addItem(spacerItem)
+        # 转置复选框，使用 QCheckBox 实现
+        self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBox.setObjectName("checkBox")
+        self.horizontalLayout_2.addWidget(self.checkBox)
+        self.sidebar_verticalLayout.addLayout(self.horizontalLayout_2)
 
         # 经脉、穴位选择器，使用 QComboBox 实现
         # ComboBox 1
@@ -83,18 +96,18 @@ class Ui_MainWindow(object):
         # 经脉、穴位展示，使用 QTextEdit 实现
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit.setMinimumSize(QtCore.QSize(420, 240))
-        self.textEdit.setObjectName("textEdit")
         self.textEdit.setReadOnly(True)
+        self.textEdit.setObjectName("textEdit")
         self.sidebar_verticalLayout.addWidget(self.textEdit)
 
         # 播放、暂停按钮，使用 QPushButton 实现
         self.buttons_horizontalLayout = QtWidgets.QHBoxLayout()
         self.buttons_horizontalLayout.setObjectName("buttons_horizontalLayout")
         # 空白布局 1
-        spacerItem = QtWidgets.QSpacerItem(
+        spacerItem1 = QtWidgets.QSpacerItem(
             40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.buttons_horizontalLayout.addItem(spacerItem)
+        self.buttons_horizontalLayout.addItem(spacerItem1)
         # QPushButton 1
         self.play = QtWidgets.QPushButton(self.centralwidget)
         self.play.setMinimumSize(QtCore.QSize(120, 40))
@@ -110,10 +123,10 @@ class Ui_MainWindow(object):
         self.buttons_horizontalLayout.addWidget(self.pause)
         self.pause.clicked.connect(pauseVideo)
         # 空白布局 2
-        spacerItem1 = QtWidgets.QSpacerItem(
+        spacerItem2 = QtWidgets.QSpacerItem(
             40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.buttons_horizontalLayout.addItem(spacerItem1)
+        self.buttons_horizontalLayout.addItem(spacerItem2)
         self.sidebar_verticalLayout.addLayout(self.buttons_horizontalLayout)
 
         # 添加深度图像放置位置
@@ -152,6 +165,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "TCM"))
+        self.checkBox.setText(_translate("MainWindow", "转置"))
         self.play.setText(_translate("MainWindow", "播放"))
         self.pause.setText(_translate("MainWindow", "暂停"))
         self.deepthImage.setText(_translate("MainWindow", "DeepthImage"))
@@ -177,8 +191,8 @@ if __name__ == "__main__":
     MainWindow.show()
 
     # 测试
-    image = cv.imread("./res/test.jpg")
+    image = cv.imread("res/test.jpg")
     updateImage(ui.cameraImage, image)
-    deepImage = cv.imread("./res/test.jpg")
-    updateImage(ui.deepthImage, deepImage)
+    deepImage = cv.imread("res/test.jpg")
+    updateImage(ui.deepthImage, deepImage, type=0)
     sys.exit(app.exec_())
