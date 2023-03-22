@@ -25,6 +25,8 @@ class Ui_MainWindow(object):
         self.sidebar_verticalLayout = QtWidgets.QVBoxLayout()
         self.sidebar_verticalLayout.setContentsMargins(0, 0, 0, -1)
         self.sidebar_verticalLayout.setObjectName("sidebar_verticalLayout")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.logo = QtWidgets.QLabel(self.centralwidget)
         self.logo.setMinimumSize(QtCore.QSize(117, 67))
         self.logo.setMaximumSize(QtCore.QSize(117, 67))
@@ -32,7 +34,15 @@ class Ui_MainWindow(object):
         self.logo.setText("")
         self.logo.setAlignment(QtCore.Qt.AlignCenter)
         self.logo.setObjectName("logo")
-        self.sidebar_verticalLayout.addWidget(self.logo)
+        self.horizontalLayout_2.addWidget(self.logo)
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.horizontalLayout_2.addItem(spacerItem)
+        self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBox.setObjectName("checkBox")
+        self.horizontalLayout_2.addWidget(self.checkBox)
+        self.sidebar_verticalLayout.addLayout(self.horizontalLayout_2)
         self.meridiansBox = QtWidgets.QComboBox(self.centralwidget)
         self.meridiansBox.setMinimumSize(QtCore.QSize(420, 45))
         self.meridiansBox.setMaximumSize(QtCore.QSize(16777215, 45))
@@ -51,15 +61,15 @@ class Ui_MainWindow(object):
         self.sidebar_verticalLayout.addWidget(self.acupointsBox)
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit.setMinimumSize(QtCore.QSize(420, 240))
-        self.textEdit.setHtml("")
+        self.textEdit.setReadOnly(True)
         self.textEdit.setObjectName("textEdit")
         self.sidebar_verticalLayout.addWidget(self.textEdit)
         self.buttons_horizontalLayout = QtWidgets.QHBoxLayout()
         self.buttons_horizontalLayout.setObjectName("buttons_horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(
+        spacerItem1 = QtWidgets.QSpacerItem(
             40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.buttons_horizontalLayout.addItem(spacerItem)
+        self.buttons_horizontalLayout.addItem(spacerItem1)
         self.play = QtWidgets.QPushButton(self.centralwidget)
         self.play.setMinimumSize(QtCore.QSize(120, 40))
         self.play.setMaximumSize(QtCore.QSize(16777215, 40))
@@ -70,10 +80,10 @@ class Ui_MainWindow(object):
         self.pause.setMaximumSize(QtCore.QSize(16777215, 40))
         self.pause.setObjectName("pause")
         self.buttons_horizontalLayout.addWidget(self.pause)
-        spacerItem1 = QtWidgets.QSpacerItem(
+        spacerItem2 = QtWidgets.QSpacerItem(
             40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
         )
-        self.buttons_horizontalLayout.addItem(spacerItem1)
+        self.buttons_horizontalLayout.addItem(spacerItem2)
         self.sidebar_verticalLayout.addLayout(self.buttons_horizontalLayout)
         self.deepthImage = QtWidgets.QLabel(self.centralwidget)
         self.deepthImage.setMinimumSize(QtCore.QSize(420, 180))
@@ -92,7 +102,7 @@ class Ui_MainWindow(object):
         self.gridLayout.setColumnStretch(1, 3)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1400, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1400, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -105,10 +115,24 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "TCM"))
+        self.checkBox.setText(_translate("MainWindow", "转置"))
         self.meridiansBox.setItemText(0, _translate("MainWindow", "1"))
         self.meridiansBox.setItemText(1, _translate("MainWindow", "2"))
         self.acupointsBox.setItemText(0, _translate("MainWindow", "1"))
         self.acupointsBox.setItemText(1, _translate("MainWindow", "2"))
+        self.textEdit.setHtml(
+            _translate(
+                "MainWindow",
+                '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">\n'
+                '<html><head><meta name="qrichtext" content="1" /><meta charset="utf-8" /><style type="text/css">\n'
+                "p, li { white-space: pre-wrap; }\n"
+                "hr { height: 1px; border-width: 0; }\n"
+                'li.unchecked::marker { content: "\\2610"; }\n'
+                'li.checked::marker { content: "\\2612"; }\n'
+                "</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:16px; font-weight:400; font-style:normal;\">\n"
+                '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p></body></html>',
+            )
+        )
         self.play.setText(_translate("MainWindow", "播放"))
         self.pause.setText(_translate("MainWindow", "暂停"))
         self.deepthImage.setText(_translate("MainWindow", "DeepthImage"))
