@@ -15,7 +15,6 @@ from hooks.utils import FindAcupoints
 # Local imports
 from gui import Ui_MainWindow
 from hooks.utils import playVideo
-from store.data import Name
 from hooks.HandTrackingModule import HandDetector
 from hooks.PoseModule import PoseDetector
 
