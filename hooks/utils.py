@@ -1,19 +1,28 @@
 from PyQt5 import QtGui
 from store.data import AcupointsPosition
-
+import serial
+import time
+import math
 import cv2 as cv
 import sys
+import numpy as np
 
 # 用于展示视频（图像）
 from hooks.HandTrackingModule import HandDetector
 from hooks.PoseModule import PoseDetector
 from hooks.showMeridians import findMeridians
-from hooks.findAcupoints import showAcupointsCircle, showAcupointsText
+from hooks.findAcupoints import showAcupointsCircle, showAcupointsText, getPosition
+
 handDetector = HandDetector(detectionCon=0.9, maxHands=2)
 poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 LH_Landmarks = []
 RH_Landmarks = []
 Pose_Landmarks = []
+
+Name = [["尺泽", "孔最", "侠白", "天泉", "郄门", "大横", "归来", "天枢", "库房", "不容", "梁门", "太乙", "大巨", "府舍",
+         "腹结", "伏兔", "阴市", "足三里", "条口"],
+        ["臑俞", "曲垣", "膏肓", "秩边", "胞肓", "盲门", "意舍", "魂门", "譩譆", "委中", "承扶", "殷门", "合阳", "承筋",
+         "承山", "消泺", "臑会", "肘尖", "四渎"]]
 
 
 def MP(image):
@@ -569,11 +578,68 @@ def FindAcupoints():
                 )
                 AcupointsPosition[1][1][41] = (int(cx28), int(cy28))
 
+
+def Projection(u0, v0, fx, fy, u, v, z):
+    pixel_coordinate = np.array([[u], [v], [1]])
+    intrix_matrix = [[fx, 0, u0], [0, fy, v0], [0, 0, 1]]
+    matrix = np.linalg.inv(intrix_matrix)
+    x = z * (matrix[0][0] * u + matrix[0][2]) / 10
+    y = z * (matrix[1][1] * v + matrix[1][2]) / 10
+    return x, y, z / 10
+
+
+def transport(color_image, depth_color_image):
+    ser = serial.Serial('COM4', 9600, timeout=1)
+
+    i, j, k = getPosition("天泉（左）")
+    u, v = AcupointsPosition[i][j][k][0], AcupointsPosition[i][j][k][1]
+
+    # if xy[0] < 720 and xy[1] < 1200:
+    x, y, z = Projection(640.612671, 367.137726, 607.669800, 607.552429, u, v,
+                         depth_color_image[v][u])
+
+    x = int(x)
+    y = int(y)
+    z = int(z)
+
+    r = math.sqrt(x * x + y * y + z * z);
+    theta = math.atan2(y, x) * (180 / math.pi);
+    phi = math.acos(z / r) * (180 / math.pi);
+
+    # print("x: " + str(x) + '   y: ' + str(y) + '   z: ' + str(z))
+
+    # img = color_image.astype(np.uint8).copy()
+    # if xy[0] < 720 and xy[1] < 1200:
+    #     cv.circle(img, xy, 7, (255, 0, 255), cv.FILLED)
+
+    # 生成x y z坐标，并用空格分隔
+    coords = f"{r} {theta} {phi}\n"
+    # 将字符串编码为字节，并发送给Arduino
+    ser.write(coords.encode())
+    # 打印发送的数据
+    print(f"Sent: {coords}")
+
+    # 等待0.5秒
+    time.sleep(0.5)
+    # 读取Arduino返回的数据，并解码为0.字符串
+    data = ser.readline().decode()
+    # 如果数据不为空，则打印接收到的数据
+    if data:
+        print(f"Received: {data}")
+
+    # 等待0.5秒
+    time.sleep(0.5)
+    # 读取Arduino返回的数据，并解码为字符串
+    data = ser.readline().decode()
+    # 如果数据不为空，则打印接收到的数据
+    if data:
+        print(f"Transmitted: {data}")
+
+
 def playVideo():
     dict = sys.modules["__main__"].__dict__
     dict["flag"] = True
     pyK4A = dict["pyK4A"]
-
     # 打开摄像头
     pyK4A.device_start_cameras(dict["device_config"])
     while dict["flag"]:
@@ -589,25 +655,22 @@ def playVideo():
                 depth_image_handle, color_image_handle
             )
 
-
             # 等待25ms
             cv.waitKey(25)
             MP(image)
             FindAcupoints()
+            transport(image, depth_image)
+
             selectedMeridians = dict["selectedMeridians"]
             for name in selectedMeridians:
                 image = findMeridians(name, AcupointsPosition, image)
-            # print(AcupointsPosition)
             selectedAcupoints = dict["selectedAcupoints"]
             for nameAcupoint in selectedAcupoints:
                 # print(nameAcupoint)
                 # 展示图片
-                image, position  = showAcupointsCircle(image, nameAcupoint)
-
+                image, position = showAcupointsCircle(image, nameAcupoint)
                 image = showAcupointsText(image, nameAcupoint, position)
-                # cv2.imshow('capture', frame)
-                # if cv2.waitKey(1) & 0xFF == ord('q'):
-                #     break
+                # transport(image, depth_image)
             # label, img
             updateImage(dict["ui"].deepthImage, depth_image)
             updateImage(dict["ui"].cameraImage, image)
@@ -651,18 +714,20 @@ def updateMeridiansList(selectedList):
     dict["selectedMeridians"] = selectedList
     updateText()
 
+
 def updateAcupointsList(selectedList):
     print(selectedList)
     dict = sys.modules["__main__"].__dict__
     dict["selectedAcupoints"] = selectedList
     updateText()
 
+
 def updateText():
     dict = sys.modules["__main__"].__dict__
     text = (
-        "经脉："
-        + ", ".join(dict["selectedMeridians"])
-        + "\n==============================\n穴位："
-        + ", ".join(dict["selectedAcupoints"])
+            "经脉："
+            + ", ".join(dict["selectedMeridians"])
+            + "\n==============================\n穴位："
+            + ", ".join(dict["selectedAcupoints"])
     )
     dict["ui"].textEdit.setPlainText(text)

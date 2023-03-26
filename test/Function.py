@@ -7,6 +7,8 @@ from PIL import Image, ImageDraw, ImageFont
 import sys
 sys.path.insert(1, '../pyKinectAzure/')
 from pyKinectAzure import pyKinectAzure, _k4a
+import serial
+import time
 
 
 Name = [["尺泽", "孔最", "侠白", "天泉", "郄门", "大横", "归来", "天枢", "库房", "不容", "梁门", "太乙", "大巨", "府舍", "腹结", "伏兔", "阴市", "足三里", "条口"],
@@ -215,6 +217,8 @@ serial_number
 # 记录获得次数
 k = 0
 
+ser = serial.Serial('COM4', 9600, timeout=1)
+
 #对获取的深度图像进行颜色处理
 def color_depth_image(depth_image):
     # 实现将原图片转换为uint8类型
@@ -238,20 +242,51 @@ while (True):
         MP(color_image)
         FindAcupoints()
         xy, image = FindAcupoint(color_image, "库房", 0)
-
+        u, v = AcupointsPosition[i][j][k][0], AcupointsPosition[i][j][k][1]
         # if xy[0] < 720 and xy[1] < 1200:
-        x, y, z = Projection(640.612671, 367.137726, 607.669800, 607.552429, xy[0], xy[1], depth_color_image[xy[1]][xy[0]])
+        x, y, z = Projection(640.612671, 367.137726, 607.669800, 607.552429, u, v, depth_color_image[v][u])
 
-        print("x: " + str(x) + '   y: ' + str(y) + '   z: ' + str(z))
+        x = int(x)
+        y = int(y)
+        z = int(z)
 
-        img = color_image.astype(np.uint8).copy()
-        if xy[0] < 720 and xy[1] < 1200:
-            cv.circle(img, xy, 7, (255, 0, 255), cv.FILLED)
+        r = math.sqrt(x * x + y * y + z * z);
+        theta = math.atan2(y, x) * (180 / math.pi);
+        phi = math.acos(z / r) * (180 / math.pi);
 
-        cv.namedWindow(' Color Image', cv.WINDOW_NORMAL)
-        cv.imshow(' Color Image', img)
-        cv.namedWindow(' Depth Color Image', cv.WINDOW_NORMAL)
-        cv.imshow(' Depth Color Image', depth_color_image)
+        # print("x: " + str(x) + '   y: ' + str(y) + '   z: ' + str(z))
+
+        # img = color_image.astype(np.uint8).copy()
+        # if xy[0] < 720 and xy[1] < 1200:
+        #     cv.circle(img, xy, 7, (255, 0, 255), cv.FILLED)
+
+        # 生成x y z坐标，并用空格分隔
+        coords = f"{r} {theta} {phi}\n"
+        # 将字符串编码为字节，并发送给Arduino
+        ser.write(coords.encode())
+        # 打印发送的数据
+        print(f"Sent: {coords}")
+
+        # 等待0.5秒
+        time.sleep(0.5)
+        # 读取Arduino返回的数据，并解码为0.字符串
+        data = ser.readline().decode()
+        # 如果数据不为空，则打印接收到的数据
+        if data:
+            print(f"Received: {data}")
+
+        # 等待0.5秒
+        time.sleep(0.5)
+        # 读取Arduino返回的数据，并解码为字符串
+        data = ser.readline().decode()
+        # 如果数据不为空，则打印接收到的数据
+        if data:
+            print(f"Transmitted: {data}")
+
+        # cv.namedWindow(' Color Image', cv.WINDOW_NORMAL)
+        # cv.imshow(' Color Image', img)
+        # cv.namedWindow(' Depth Color Image', cv.WINDOW_NORMAL)
+        # cv.imshow(' Depth Color Image', depth_color_image)
         k = cv.waitKey(25)
         if k == 27:  # Esc
             break
