@@ -7,8 +7,6 @@ from PIL import Image, ImageDraw, ImageFont
 import sys
 sys.path.insert(1, '../pyKinectAzure/')
 from pyKinectAzure import pyKinectAzure, _k4a
-import serial
-import time
 
 
 Name = [["尺泽", "孔最", "侠白", "天泉", "郄门", "大横", "归来", "天枢", "库房", "不容", "梁门", "太乙", "大巨", "府舍", "腹结", "伏兔", "阴市", "足三里", "条口"],
