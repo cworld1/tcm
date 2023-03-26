@@ -202,8 +202,8 @@ if __name__ == "__main__":
     MainWindow.show()
 
     # 测试
-    image = cv.imread("res/test.jpg")
+    image = cv.imread("./res/test.jpg")
     updateImage(ui.cameraImage, image)
-    deepImage = cv.imread("res/test.jpg")
-    updateImage(ui.deepthImage, deepImage, type=0)
+    deepImage = cv.imread("./res/test.jpg")
+    updateImage(ui.deepthImage, deepImage)
     sys.exit(app.exec_())
