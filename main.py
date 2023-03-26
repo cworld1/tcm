@@ -36,8 +36,8 @@ global selectedAcupoints, selectedMeridians
 selectedAcupoints = []
 selectedMeridians = []
 
-handDetector = HandDetector(detectionCon=0.8, maxHands=2)
-poseDetector = PoseDetector(detectionCon=0.8, trackCon=0.9)
+handDetector = HandDetector(detectionCon=0.9, maxHands=2)
+poseDetector = PoseDetector(detectionCon=0.9, trackCon=0.9)
 
 
 # 一个UI希望集成上述函数，有一个720*1200的视频显示区域，有两个下拉式复选框组件，一个是穴位acupoints，另一个是经脉meridians，
