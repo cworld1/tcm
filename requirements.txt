@@ -19,7 +19,7 @@ flatbuffers==23.3.3
 fonttools==4.39.3
 html5lib==1.1
 idna==3.4
-importlib-metadata==6.1.0
+importlib-metadata==6.3.0
 installer==0.7.0
 jaraco.classes==3.2.3
 Jinja2==3.1.2
