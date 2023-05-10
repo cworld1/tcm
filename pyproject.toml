@@ -12,7 +12,7 @@ opencv-python = "^4.7.0.72"
 pyqt5 = "^5.15.9"
 pillow = "^9.5.0"
 qt-material = "^2.14"
-mediapipe = "^0.9.3.0"
+mediapipe = "^0.10.0"
 black = "^23.3.0"
 
 
