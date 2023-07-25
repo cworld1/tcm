@@ -28,9 +28,11 @@ from hooks.utils import (
     updateImage,
     updateMeridiansList,
     updateAcupointsList,
+    transport
 )
 
-
+def testsomething():
+    print(1)
 class Ui_MainWindow(object):
     # 更新图片
     def setupUi(self, MainWindow):
@@ -70,13 +72,22 @@ class Ui_MainWindow(object):
         )
         self.horizontalLayout_2.addItem(spacerItem)
         # 转置复选框，使用 QCheckBox 实现
-        self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkBox.setObjectName("checkBox")
+        # self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
+        # self.checkBox.setObjectName("checkBox")
+        # self.horizontalLayout_2.addWidget(self.checkBox)
+        # self.sidebar_verticalLayout.addLayout(self.horizontalLayout_2)
+        # self.checkBox.stateChanged.connect(testsomething)
+
+        self.checkBox = QtWidgets.QPushButton(self.centralwidget)
+        self.checkBox.setMinimumSize(QtCore.QSize(120, 40))
+        self.checkBox.setMaximumSize(QtCore.QSize(16777215, 40))
+        self.checkBox.setObjectName("传输")
         self.horizontalLayout_2.addWidget(self.checkBox)
         self.sidebar_verticalLayout.addLayout(self.horizontalLayout_2)
 
+        self.checkBox.clicked.connect(transport)
         # 经脉、穴位选择器，使用 QComboBox 实现
-        # ComboBox 1
+        # ComboBox 1n
         self.meridiansBox = ComboCheckBox(meridians)
         self.meridiansBox.setMinimumSize(QtCore.QSize(420, 45))
         self.meridiansBox.setMaximumSize(QtCore.QSize(16777215, 45))
@@ -165,7 +176,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "TCM"))
-        self.checkBox.setText(_translate("MainWindow", "转置"))
+        self.checkBox.setText(_translate("MainWindow", "传输"))
         self.play.setText(_translate("MainWindow", "播放"))
         self.pause.setText(_translate("MainWindow", "暂停"))
         self.deepthImage.setText(_translate("MainWindow", "DeepthImage"))
